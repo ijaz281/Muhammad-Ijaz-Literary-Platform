@@ -1,0 +1,30 @@
+
+NEW ORDER RECEIVED
+
+A new order has been placed.
+
+Order Number: {{ order.order_number }}
+Customer: {{ order.shipping_name }}
+Email: {{ order.customer_email }}
+Phone: {{ order.shipping_phone }}
+
+Payment Method: {{ order.get_payment_method_display }}
+
+ORDER ITEMS:
+
+{% for item in items %}
+{{ item.book_title }}
+Quantity: {{ item.quantity }}
+Total: PKR {{ item.line_total }}
+
+{% endfor %}
+
+Grand Total: PKR {{ order.total_amount }}
+
+SHIPPING:
+
+{{ order.shipping_address }}
+{{ order.shipping_city }}
+{{ order.shipping_country }}
+
+Please review the order in the Django administration panel.

@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>New Order Notification</title>
+</head>
+<body style="font-family:Arial,sans-serif;background:#f5f2eb;padding:25px;color:#17243b;">
+
+<div style="max-width:650px;margin:auto;background:white;padding:30px;border-radius:10px;">
+
+    <h2>New Order Received</h2>
+
+    <p>A new order has been placed on your literary platform.</p>
+
+    <h3>Order Information</h3>
+
+    <p><strong>Order Number:</strong> {{ order.order_number }}</p>
+    <p><strong>Customer:</strong> {{ order.shipping_name }}</p>
+    <p><strong>Customer Email:</strong> {{ order.customer_email }}</p>
+    <p><strong>Phone:</strong> {{ order.shipping_phone }}</p>
+    <p><strong>Payment Method:</strong> {{ order.get_payment_method_display }}</p>
+    <p><strong>Total:</strong> PKR {{ order.total_amount }}</p>
+
+    <h3>Purchased Books</h3>
+
+    <ul>
+        {% for item in items %}
+        <li>
+            {{ item.book_title }} -
+            Quantity: {{ item.quantity }} -
+            PKR {{ item.line_total }}
+        </li>
+        {% endfor %}
+    </ul>
+
+    <h3>Shipping Information</h3>
+
+    <p>
+        {{ order.shipping_address }}<br>
+        {{ order.shipping_city }}<br>
+        {{ order.shipping_country }}
+    </p>
+
+    <hr>
+
+    <p>Please review this order in the Django administration panel.</p>
+
+    <strong>{{ platform_name }}</strong>
+
+</div>
+
+</body>
+</html>

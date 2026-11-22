@@ -1,0 +1,72 @@
+
+@font-face {
+    font-family: "JameelNoori";
+    src: url("../fonts/Jameel%20Noori%20Nastaleeq%20Regular.ttf")
+        format("truetype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Urdu input fields */
+.urdu-literature-field {
+    font-family: "JameelNoori", serif !important;
+    direction: rtl !important;
+    text-align: right !important;
+    font-size: 23px !important;
+    line-height: 2.6 !important;
+    word-spacing: 1px;
+    letter-spacing: 0;
+}
+
+/* Publication title */
+input.urdu-literature-field {
+    min-height: 65px;
+    font-size: 28px !important;
+}
+
+/* Publication excerpt */
+textarea.urdu-literature-field {
+    min-height: 130px;
+}
+
+/* Main publication editor */
+textarea.urdu-literature-content {
+    min-height: 420px;
+    padding: 18px !important;
+    font-size: 23px !important;
+    line-height: 2.8 !important;
+}
+
+/* Live preview */
+.urdu-live-preview {
+    margin-top: 15px;
+    padding: 22px;
+    background: #f8f5ef;
+    border: 1px solid #e5ded2;
+    border-radius: 10px;
+    direction: rtl;
+    text-align: right;
+    font-family: "JameelNoori", serif;
+    font-size: 23px;
+    line-height: 2.8;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.urdu-live-preview-label {
+    direction: ltr;
+    text-align: left;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: #777;
+    margin-bottom: 12px;
+}
+
+/* English fields */
+.english-literature-field {
+    direction: ltr !important;
+    text-align: left !important;
+    font-family: Arial, sans-serif !important;
+}

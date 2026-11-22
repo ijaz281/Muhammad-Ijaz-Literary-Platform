@@ -1,0 +1,49 @@
+﻿# Environment variables and secrets
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+env/
+
+# Databases
+*.sqlite3
+*.sqlite3-*
+*.db
+*.db-backup*
+
+# Uploaded media and generated static files
+backend/media/
+backend/staticfiles/
+staticfiles/
+
+# Node dependencies and builds
+node_modules/
+frontend/node_modules/
+frontend/dist/
+dist/
+
+# Logs and temporary files
+*.log
+.cache/
+.DS_Store
+Thumbs.db
+
+# Archives
+*.zip
+*.rar
+*.7z
+
+# IDE
+.idea/
+.vscode/
+
+# Backup folders
+cod_backup_*/

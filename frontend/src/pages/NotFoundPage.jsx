@@ -1,0 +1,45 @@
+import { Link } from "react-router-dom";
+import { ArrowLeft, BookOpen } from "lucide-react";
+
+import Container from "../components/ui/Container";
+
+export default function NotFoundPage() {
+  return (
+    <main className="flex min-h-[70vh] items-center bg-[#f8f7f3] py-20">
+      <Container>
+        <div className="mx-auto max-w-2xl text-center">
+          <p className="font-serif text-8xl font-bold text-literary-gold sm:text-9xl">
+            404
+          </p>
+
+          <h1 className="mt-5 font-serif text-3xl font-bold text-literary-navy sm:text-4xl">
+            Page Not Found
+          </h1>
+
+          <p className="mx-auto mt-5 max-w-lg leading-8 text-gray-600">
+            The page you are looking for may have been moved,
+            removed or is temporarily unavailable.
+          </p>
+
+          <div className="mt-9 flex flex-wrap justify-center gap-4">
+            <Link
+              to="/"
+              className="inline-flex items-center gap-2 bg-literary-navy px-7 py-4 font-semibold text-white hover:bg-literary-gold hover:text-literary-navy"
+            >
+              <ArrowLeft size={18} />
+              Back to Home
+            </Link>
+
+            <Link
+              to="/books"
+              className="inline-flex items-center gap-2 border border-literary-navy px-7 py-4 font-semibold text-literary-navy hover:bg-literary-navy hover:text-white"
+            >
+              <BookOpen size={18} />
+              Explore Books
+            </Link>
+          </div>
+        </div>
+      </Container>
+    </main>
+  );
+}

@@ -1,0 +1,36 @@
+
+Thank you for shopping with Muhammad Ijaz Ul Haq Literary Platform!
+
+Hello {{ order.shipping_name }},
+
+Your order has been successfully placed.
+
+Order Number: {{ order.order_number }}
+Order Date: {{ order.placed_at|date:"d M Y, h:i A" }}
+Payment Method: {{ order.get_payment_method_display }}
+Payment Status: {{ order.get_payment_status_display }}
+
+ORDER ITEMS:
+
+{% for item in items %}
+{{ item.book_title }}
+Quantity: {{ item.quantity }}
+Total: PKR {{ item.line_total }}
+
+{% endfor %}
+
+Subtotal: PKR {{ order.subtotal }}
+Shipping: PKR {{ order.shipping_fee }}
+Grand Total: PKR {{ order.total_amount }}
+
+DELIVERY ADDRESS:
+
+{{ order.shipping_name }}
+{{ order.shipping_address }}
+{{ order.shipping_city }}
+{{ order.shipping_country }}
+{{ order.shipping_phone }}
+
+Thank you for choosing us.
+
+Muhammad Ijaz Ul Haq Literary Platform
