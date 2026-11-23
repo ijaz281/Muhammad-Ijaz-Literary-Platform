@@ -230,14 +230,28 @@ REST_FRAMEWORK = {
 }
 
 
+
 # ============================================================
 # CORS CONFIGURATION
 # ============================================================
 
 CORS_ALLOWED_ORIGINS = [
+    "https://muhammad-ijaz-literary-platform.vercel.app",
     "http://localhost:5173",
     "http://127.0.0.1:5173",
 ]
+
+# Allow authorization headers for JWT authentication.
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "authorization",
+    "content-type",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+]
+
 
 
 # ============================================================

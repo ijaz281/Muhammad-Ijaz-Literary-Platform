@@ -45,3 +45,31 @@ Thumbs.db
 # Local tooling
 .idea/
 .vscode/
+
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Database
+*.sqlite3
+*.sqlite3-*
+*.db
+
+# Media uploads
+media/
+
+# Static generated files
+staticfiles/
+
+# Python virtual environments
+venv/
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Logs
+*.log
