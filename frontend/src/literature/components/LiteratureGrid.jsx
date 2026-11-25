@@ -25,11 +25,11 @@ export default function LiteratureGrid({ items = [], loading = false }) {
     return (
       <div className="rounded-2xl border border-dashed border-gray-300 bg-gray-50 px-6 py-16 text-center">
         <h3 className="mb-2 text-xl font-bold text-literary-navy">
-          No Publications Found
+          کوئی تحریر دستیاب نہیں
         </h3>
 
         <p className="text-gray-600">
-          Literary publications will appear here when they become available.
+          ادبی تحریریں دستیاب ہوتے ہی یہاں دکھائی دیں گی۔
         </p>
       </div>
     );

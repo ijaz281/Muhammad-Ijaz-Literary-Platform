@@ -35,14 +35,14 @@ export default function LiteratureDetailsPage() {
           setPublication(result);
 
           if (!result) {
-            setError("Publication not found.");
+            setError("تحریر نہیں ملی۔");
           }
         }
       } catch (err) {
         console.error("Publication details error:", err);
 
         if (active) {
-          setError("Unable to load this publication.");
+          setError("یہ تحریر لوڈ نہیں ہو سکی۔");
         }
       } finally {
         if (active) setLoading(false);
@@ -59,7 +59,7 @@ export default function LiteratureDetailsPage() {
   if (loading) {
     return (
       <div className="py-32 text-center text-gray-500">
-        Loading publication...
+        تحریر لوڈ ہو رہی ہے...
       </div>
     );
   }
@@ -68,14 +68,14 @@ export default function LiteratureDetailsPage() {
     return (
       <div className="px-6 py-32 text-center">
         <h2 className="text-2xl font-bold text-gray-900">
-          {error || "Publication not found."}
+          {error || "تحریر نہیں ملی۔"}
         </h2>
 
         <Link
           to="/literature"
           className="mt-6 inline-block font-semibold text-amber-700"
         >
-          Return to Literature
+          ادب کی جانب واپس جائیں
         </Link>
       </div>
     );
@@ -103,7 +103,7 @@ export default function LiteratureDetailsPage() {
             className="mb-10 inline-flex items-center gap-2 text-gray-300 hover:text-amber-400"
           >
             <ArrowLeft size={18} />
-            Back to Literature
+            ادب پر واپس جائیں
           </Link>
 
           <div className="mb-5 flex flex-wrap items-center gap-3">
@@ -113,7 +113,7 @@ export default function LiteratureDetailsPage() {
 
             {publication.isFeatured && (
               <span className="text-sm text-amber-300">
-                Featured Publication
+                نمایاں تحریر
               </span>
             )}
           </div>
@@ -160,7 +160,7 @@ export default function LiteratureDetailsPage() {
           <BookOpen className="text-amber-700" size={22} />
 
           <h2 className="text-xl font-bold text-gray-900">
-            Read Publication
+            تحریر پڑھیے
           </h2>
         </div>
 
@@ -174,7 +174,7 @@ export default function LiteratureDetailsPage() {
             className="inline-flex items-center gap-2 rounded-lg bg-gray-900 px-6 py-3 font-semibold text-white hover:bg-amber-700"
           >
             <ArrowLeft size={18} />
-            Explore More Literature
+            مزید ادب دیکھیے
           </Link>
         </div>
       </section>

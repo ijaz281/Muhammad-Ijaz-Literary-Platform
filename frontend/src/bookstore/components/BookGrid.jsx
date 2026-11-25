@@ -6,10 +6,10 @@ export default function BookGrid({ books }) {
     return (
       <div className="rounded-2xl bg-gray-50 py-20 text-center">
         <h3 className="text-xl font-bold text-gray-800">
-          No Books Found
+          کوئی کتاب دستیاب نہیں
         </h3>
         <p className="mt-2 text-gray-500">
-          Try changing your search or filters.
+          اپنی تلاش یا فلٹرز تبدیل کر کے دیکھیے۔
         </p>
       </div>
     );

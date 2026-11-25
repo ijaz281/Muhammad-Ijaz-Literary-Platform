@@ -31,7 +31,7 @@ export default function LiteraturePage() {
 
         if (active) {
           setError(
-            "Unable to load publications. Please check your connection."
+            "ادبی تحریریں لوڈ نہیں ہو سکیں۔ براہِ کرم اپنا کنکشن چیک کریں۔"
           );
         }
       } finally {
@@ -78,16 +78,16 @@ export default function LiteraturePage() {
           <BookOpen className="mb-6 text-amber-400" size={42} />
 
           <p className="mb-4 text-sm font-semibold uppercase tracking-[0.3em] text-amber-400">
-            Literary Collection
+            ادبی ذخیرہ
           </p>
 
           <h1 className="text-4xl font-bold md:text-6xl">
-            Literature & Publications
+            ادب اور اشاعتیں
           </h1>
 
           <p className="mt-6 max-w-2xl leading-8 text-gray-300">
-            Explore poetry, literary writings and publications.
-            Discover meaningful words and creative expressions.
+            شاعری، ادبی تحریروں اور اشاعتوں کا مطالعہ کیجیے۔
+            بامعنی الفاظ اور تخلیقی اظہار دریافت کیجیے۔
           </p>
         </div>
       </section>
@@ -103,7 +103,7 @@ export default function LiteraturePage() {
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search literature..."
+              placeholder="ادب میں تلاش کریں..."
               className="w-full rounded-xl border px-12 py-4 outline-none focus:border-amber-600"
             />
           </div>
@@ -113,7 +113,7 @@ export default function LiteraturePage() {
             onChange={(e) => setCategory(e.target.value)}
             className="rounded-xl border px-5 py-4 outline-none focus:border-amber-600"
           >
-            <option value="all">All Categories</option>
+            <option value="all">تمام اصناف</option>
 
             {categories.map((item) => (
               <option key={item} value={item}>
@@ -125,7 +125,7 @@ export default function LiteraturePage() {
 
         {loading ? (
           <div className="py-20 text-center text-gray-500">
-            Loading literature...
+            ادبی مواد لوڈ ہو رہا ہے...
           </div>
         ) : error ? (
           <div className="py-20 text-center text-red-600">
@@ -135,7 +135,7 @@ export default function LiteraturePage() {
           <>
             <div className="mb-7 flex items-center justify-between">
               <h2 className="text-2xl font-bold text-gray-900">
-                Literary Collection
+                ادبی ذخیرہ
               </h2>
 
               <span className="text-sm text-gray-500">

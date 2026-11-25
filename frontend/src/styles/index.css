@@ -42,7 +42,7 @@
 
   --radius-card: 20px;
 
-  font-family: Arial, sans-serif;
+  font-family: "JameelNoori", serif;
   color: var(--color-ink);
   background: var(--color-cream);
 
@@ -72,6 +72,8 @@ body {
   min-height: 100vh;
   background: var(--color-cream);
   color: var(--color-ink);
+  direction: rtl;
+  text-align: right;
   overflow-x: hidden;
 }
 
@@ -80,7 +82,7 @@ button,
 input,
 textarea,
 select {
-  font-family: Arial, sans-serif;
+  font-family: "JameelNoori", serif;
 }
 
 button,
@@ -485,4 +487,51 @@ button:not(:disabled):active {
     transition: none !important;
     transform: none !important;
   }
+}
+
+
+/* =========================================
+   12. GLOBAL URDU INTERFACE
+   Static interface text uses Jameel Noori Nastaleeq.
+   LTR is retained only for email addresses, usernames and numeric codes.
+========================================= */
+
+html[dir="rtl"],
+html[dir="rtl"] body,
+html[dir="rtl"] button,
+html[dir="rtl"] input,
+html[dir="rtl"] textarea,
+html[dir="rtl"] select {
+  font-family: "JameelNoori", serif;
+}
+
+[dir="ltr"] {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+input[type="email"],
+input[type="password"],
+input[name="username"] {
+  unicode-bidi: plaintext;
+}
+
+/* Nastaleeq requires generous line height to prevent clipped glyphs. */
+.font-urdu,
+.urdu-content,
+.urdu-title,
+.urdu-heading {
+  line-height: 2.15;
+}
+
+/* Keep every visible frontend label in the supplied Nastaleeq typeface. */
+.font-serif,
+.font-sans,
+.font-mono,
+body,
+body button,
+body input,
+body textarea,
+body select {
+  font-family: "JameelNoori", serif !important;
 }

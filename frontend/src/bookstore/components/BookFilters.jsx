@@ -15,7 +15,7 @@ export default function BookFilters({
           htmlFor="book-search"
           className="mb-3 block text-xs font-bold uppercase tracking-wider text-literary-navy"
         >
-          Search Collection
+          ذخیرے میں تلاش کریں
         </label>
 
         <div className="relative">
@@ -29,7 +29,7 @@ export default function BookFilters({
             type="search"
             value={search}
             onChange={(event) => setSearch(event.target.value)}
-            placeholder="Search by book title, author or description..."
+            placeholder="کتاب کے عنوان، مصنف یا تعارف سے تلاش کریں..."
             className="w-full border border-gray-200 bg-literary-cream py-4 pl-12 pr-4 text-sm outline-none transition focus:border-literary-gold"
           />
         </div>
@@ -40,7 +40,7 @@ export default function BookFilters({
           htmlFor="book-category"
           className="mb-3 block text-xs font-bold uppercase tracking-wider text-literary-navy"
         >
-          Filter by Category
+          صنف کے مطابق ترتیب دیں
         </label>
 
         <div className="flex gap-3">
@@ -50,7 +50,7 @@ export default function BookFilters({
             onChange={(event) => setCategory(event.target.value)}
             className="w-full border border-gray-200 bg-literary-cream px-4 py-4 text-sm outline-none transition focus:border-literary-gold"
           >
-            <option value="">All Categories</option>
+            <option value="">تمام اصناف</option>
 
             {categories.map((item) => (
               <option
@@ -70,11 +70,11 @@ export default function BookFilters({
                 setCategory("");
               }}
               className="flex shrink-0 items-center gap-2 border border-gray-200 px-4 text-sm text-gray-600 transition hover:border-literary-gold hover:text-literary-navy"
-              title="Clear filters"
-              aria-label="Clear filters"
+              title="فلٹرز ختم کریں"
+              aria-label="فلٹرز ختم کریں"
             >
               <X size={18} />
-              <span className="hidden sm:inline">Clear</span>
+              <span className="hidden sm:inline">صاف کریں</span>
             </button>
           )}
         </div>

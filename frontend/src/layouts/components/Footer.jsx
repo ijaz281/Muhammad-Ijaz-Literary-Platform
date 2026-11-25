@@ -166,13 +166,13 @@ export default function Footer() {
             ادبی پلیٹ فارم
           </Link>
           <p className="text-sm text-white/60 text-center">
-          Developed by:{" "}
+          ترقی و تشکیل:{" "}
           <span className="font-semibold text-literary-gold">
           MMProgrammix
           </span>
           <span className="mx-1"> | </span>
           <span className="text-white/80">
-          Mr. Mubashar Ahmed Rabbani
+          مسٹر مبشر احمد ربانی
           </span>
 </p>
 

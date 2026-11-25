@@ -27,15 +27,15 @@ export function normalizeBook(book) {
 
   return {
     id: book.id,
-    title: book.title || "Untitled Book",
+    title: book.title || "بلا عنوان کتاب",
     slug: book.slug,
-    author: authorNames.join(", ") || "Author",
+    author: authorNames.join(", ") || "مصنف",
     description:
       book.short_description ||
       book.description ||
-      "Discover this literary work.",
+      "اس ادبی تخلیق کو دریافت کیجیے۔",
     cover: getImageUrl(book.cover_image),
-    category: book.category_name || "Literature",
+    category: book.category_name || "ادب",
     categorySlug: book.category_slug,
     language: book.language || "",
     format: book.book_format || "",

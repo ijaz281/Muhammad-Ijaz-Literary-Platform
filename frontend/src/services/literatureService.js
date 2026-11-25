@@ -17,7 +17,7 @@ function getImageUrl(image) {
 export function normalizePublication(item) {
   return {
     id: item.id,
-    title: item.title || "Untitled Publication",
+    title: item.title || "بلا عنوان تحریر",
     slug: item.slug,
     category: item.category || "literature",
     language: item.language || "ur",

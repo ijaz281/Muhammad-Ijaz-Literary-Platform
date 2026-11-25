@@ -13,12 +13,11 @@ export default function NotFoundPage() {
           </p>
 
           <h1 className="mt-5 font-serif text-3xl font-bold text-literary-navy sm:text-4xl">
-            Page Not Found
+            صفحہ دستیاب نہیں
           </h1>
 
           <p className="mx-auto mt-5 max-w-lg leading-8 text-gray-600">
-            The page you are looking for may have been moved,
-            removed or is temporarily unavailable.
+            ممکن ہے آپ کا مطلوبہ صفحہ منتقل کر دیا گیا ہو، حذف ہو گیا ہو یا عارضی طور پر دستیاب نہ ہو۔
           </p>
 
           <div className="mt-9 flex flex-wrap justify-center gap-4">
@@ -27,7 +26,7 @@ export default function NotFoundPage() {
               className="inline-flex items-center gap-2 bg-literary-navy px-7 py-4 font-semibold text-white hover:bg-literary-gold hover:text-literary-navy"
             >
               <ArrowLeft size={18} />
-              Back to Home
+              صفحۂ اوّل پر واپس جائیں
             </Link>
 
             <Link
@@ -35,7 +34,7 @@ export default function NotFoundPage() {
               className="inline-flex items-center gap-2 border border-literary-navy px-7 py-4 font-semibold text-literary-navy hover:bg-literary-navy hover:text-white"
             >
               <BookOpen size={18} />
-              Explore Books
+              کتب دیکھیے
             </Link>
           </div>
         </div>

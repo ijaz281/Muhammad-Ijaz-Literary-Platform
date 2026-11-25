@@ -40,29 +40,29 @@ const literaryCategories = [
   {
     icon: BookOpen,
     number: "01",
-    title: "Books & Publications",
+    title: "کتب اور اشاعتیں",
     description:
-      "Explore published books and discover meaningful literary works.",
+      "شائع شدہ کتب دیکھیے اور بامعنی ادبی تخلیقات دریافت کیجیے۔",
     link: "/books",
-    label: "Explore the library",
+    label: "کتب خانے کی سیر",
   },
   {
     icon: Feather,
     number: "02",
-    title: "Literary Writing",
+    title: "ادبی تحریریں",
     description:
-      "Discover essays, articles, poetry and creative expression.",
+      "مضامین، مقالات، شاعری اور تخلیقی اظہار دریافت کیجیے۔",
     link: "/literature",
-    label: "Read literature",
+    label: "ادب پڑھیے",
   },
   {
     icon: Library,
     number: "03",
-    title: "Literary Collection",
+    title: "ادبی ذخیرہ",
     description:
-      "Browse an organized collection of knowledge and ideas.",
+      "علم اور خیالات کے منظم ذخیرے کا مطالعہ کیجیے۔",
     link: "/literature",
-    label: "Discover collections",
+    label: "ذخیرے دیکھیے",
   },
 ];
 
@@ -121,7 +121,7 @@ function HeroSection() {
             >
               <Sparkles size={15} className="text-literary-gold" />
               <span className="text-[10px] font-bold uppercase tracking-[0.28em] text-literary-gold sm:text-xs">
-                A World of Words and Ideas
+                الفاظ اور خیالات کی ایک دنیا
               </span>
             </motion.div>
 
@@ -131,9 +131,9 @@ function HeroSection() {
               transition={{ duration: 0.9, delay: 0.12 }}
               className="font-serif text-5xl font-bold leading-[1.12] tracking-tight sm:text-6xl lg:text-[76px]"
             >
-              Discover the Art of
+              فنِ ادب دریافت کیجیے
               <span className="mt-3 block bg-gradient-to-r from-literary-gold-light via-literary-gold to-literary-gold-dark bg-clip-text text-transparent">
-                Literature.
+                ادب۔
               </span>
             </motion.h1>
 
@@ -143,9 +143,8 @@ function HeroSection() {
               transition={{ duration: 0.8, delay: 0.25 }}
               className="mt-8 max-w-xl text-base leading-8 text-white/65 sm:text-lg"
             >
-              Welcome to the literary world of Muhammad Ijaz Ul Haq.
-              Explore books, discover meaningful ideas and experience
-              the timeless beauty of written expression.
+              محمد اعجاز الحق کی ادبی دنیا میں خوش آمدید۔
+              کتب دیکھیے، بامعنی خیالات دریافت کیجیے اور تحریر کے لازوال حسن سے لطف اندوز ہوں۔
             </motion.p>
 
             <motion.div
@@ -158,7 +157,7 @@ function HeroSection() {
                 to="/books"
                 className="group inline-flex items-center gap-3 rounded-sm bg-literary-gold px-7 py-4 text-sm font-bold text-literary-dark shadow-gold transition duration-300 hover:-translate-y-1 hover:bg-literary-gold-light"
               >
-                Explore Books
+                کتب دیکھیے
                 <ArrowUpRight
                   size={18}
                   className="transition group-hover:translate-x-1 group-hover:-translate-y-1"
@@ -170,7 +169,7 @@ function HeroSection() {
                 className="group inline-flex items-center gap-3 rounded-sm border border-white/25 px-7 py-4 text-sm font-semibold text-white transition duration-300 hover:border-literary-gold hover:text-literary-gold"
               >
                 <BookOpen size={18} />
-                Discover Literature
+                ادب دریافت کیجیے
               </Link>
             </motion.div>
 
@@ -185,10 +184,10 @@ function HeroSection() {
               </div>
               <div>
                 <p className="font-serif text-lg text-white">
-                  Knowledge Through Words
+                  الفاظ کے ذریعے علم
                 </p>
                 <p className="mt-1 text-xs tracking-[0.18em] text-white/40">
-                  READ. EXPLORE. DISCOVER.
+                  پڑھیے۔ جانیے۔ دریافت کیجیے۔
                 </p>
               </div>
             </motion.div>
@@ -232,20 +231,20 @@ function HeroSection() {
                     </div>
 
                     <p className="text-[9px] font-bold uppercase tracking-[0.35em] text-literary-gold">
-                      The Art of Words
+                      الفاظ کا فن
                     </p>
 
                     <h2 className="mt-6 font-serif text-3xl font-bold leading-tight text-white sm:text-4xl">
-                      A World
+                      ایک دنیا
                       <span className="block text-literary-gold">
-                        of Literature
+                        ادب کی
                       </span>
                     </h2>
 
                     <div className="my-7 h-px w-16 bg-literary-gold/70" />
 
                     <p className="text-[10px] uppercase tracking-[0.25em] text-white/60">
-                      Muhammad Ijaz Ul Haq
+                      محمد اعجاز الحق
                     </p>
 
                     <div className="mt-12 text-literary-gold/70">
@@ -278,7 +277,7 @@ function HeroSection() {
             >
               <Quote size={22} className="text-literary-gold" />
               <p className="mt-2 text-xs text-white/70">
-                Words create worlds.
+                الفاظ نئی دنیائیں تخلیق کرتے ہیں۔
               </p>
             </motion.div>
 
@@ -289,7 +288,7 @@ function HeroSection() {
             >
               <Star size={20} className="text-literary-gold" />
               <p className="mt-2 text-xs text-white/70">
-                Inspired by literature.
+                ادب سے متاثر۔
               </p>
             </motion.div>
           </div>
@@ -322,12 +321,11 @@ function IntroductionSection() {
                 </div>
 
                 <p className="relative mt-8 font-serif text-3xl font-bold text-white sm:text-4xl">
-                  The Power of Words
+                  الفاظ کی طاقت
                 </p>
 
                 <p className="relative mt-5 max-w-sm text-sm leading-8 text-white/65">
-                  Every book opens a door to knowledge, imagination
-                  and new perspectives.
+                  ہر کتاب علم، تخیل اور نئے زاویوں کے در وا کرتی ہے۔
                 </p>
 
                 <div className="relative mt-8 h-px w-20 bg-literary-gold" />
@@ -338,30 +336,27 @@ function IntroductionSection() {
           </Reveal>
 
           <Reveal delay={0.12}>
-            <SectionLabel>About the Platform</SectionLabel>
+            <SectionLabel>ادبی پلیٹ فارم کا تعارف</SectionLabel>
 
             <h2 className="font-serif text-4xl font-bold leading-tight text-literary-navy sm:text-5xl lg:text-6xl">
-              A Space for
+              ایک جگہ
               <span className="mt-2 block text-literary-gold">
-                Literary Excellence.
+                ادبی عظمت کے لیے۔
               </span>
             </h2>
 
             <p className="mt-8 text-base leading-8 text-literary-muted">
-              The Muhammad Ijaz Ul Haq Literary Platform brings books,
-              publications and literary resources together in one place.
+              محمد اعجاز الحق کا ادبی پلیٹ فارم کتب، تحریروں اور ادبی وسائل کو ایک جگہ جمع کرتا ہے۔
             </p>
 
             <p className="mt-5 text-base leading-8 text-literary-muted">
-              Its purpose is to make literary works easier to explore,
-              encourage reading and create a meaningful connection
-              between authors and readers.
+              اس کا مقصد ادبی تخلیقات تک رسائی آسان بنانا، مطالعے کا شوق بڑھانا اور مصنفین و قارئین کے درمیان بامعنی تعلق قائم کرنا ہے۔
             </p>
 
             <div className="mt-8 flex items-center gap-4 border-l-2 border-literary-gold py-2 pl-5">
               <BookMarked size={25} className="shrink-0 text-literary-gold" />
               <p className="font-serif text-lg italic text-literary-navy">
-                A journey of knowledge begins with a single page.
+                علم کا سفر ایک صفحے سے شروع ہوتا ہے۔
               </p>
             </div>
 
@@ -369,7 +364,7 @@ function IntroductionSection() {
               to="/about"
               className="group mt-10 inline-flex items-center gap-3 text-sm font-bold text-literary-emerald transition hover:text-literary-gold"
             >
-              Discover More
+              مزید جانیے
               <ArrowRight size={18} className="transition group-hover:translate-x-2" />
             </Link>
           </Reveal>
@@ -397,7 +392,7 @@ function FeaturedBooksSection() {
       setBooks(Array.isArray(data) ? data : []);
     } catch (err) {
       console.error("Featured books error:", err);
-      setError("Unable to load books. Please check your backend connection.");
+      setError("کتب لوڈ نہیں ہو سکیں۔ براہِ کرم سرور کنکشن چیک کریں۔");
     } finally {
       setLoading(false);
     }
@@ -414,9 +409,9 @@ function FeaturedBooksSection() {
       <Container>
         <Reveal>
           <SectionHeading
-            eyebrow="Explore Our Collection"
-            title="Featured Books"
-            description="Discover literary works from our growing collection."
+            eyebrow="ہمارا ادبی ذخیرہ"
+            title="منتخب کتب"
+            description="ہمارے وسیع ہوتے ادبی ذخیرے سے منتخب تخلیقات دریافت کیجیے۔"
           />
         </Reveal>
 
@@ -438,7 +433,7 @@ function FeaturedBooksSection() {
               className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-literary-navy"
             >
               <RefreshCw size={16} />
-              Try Again
+              دوبارہ کوشش کریں
             </button>
           </div>
         )}
@@ -447,10 +442,10 @@ function FeaturedBooksSection() {
           <div className="mt-12 border border-literary-gold/20 bg-literary-cream p-12 text-center">
             <BookOpen size={40} className="mx-auto text-literary-gold" />
             <h3 className="mt-5 font-serif text-2xl font-bold text-literary-navy">
-              Books Coming Soon
+              کتب جلد پیش کی جائیں گی
             </h3>
             <p className="mt-3 text-sm text-literary-muted">
-              Our literary collection will appear here when books are available.
+              کتب دستیاب ہوتے ہی ہمارا ادبی ذخیرہ یہاں دکھائی دے گا۔
             </p>
           </div>
         )}
@@ -482,13 +477,13 @@ function FeaturedBooksSection() {
                       )}
 
                       <div className="absolute left-4 top-4 rounded-full border border-white/50 bg-literary-dark/80 px-3 py-1 text-[9px] font-bold uppercase tracking-[0.2em] text-literary-gold backdrop-blur">
-                        Featured
+                        نمایاں
                       </div>
                     </div>
 
                     <div className="p-6">
                       <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-literary-gold">
-                        {book.category || "Literature"}
+                        {book.category || "ادب"}
                       </p>
 
                       <h3 className="mt-3 font-serif text-xl font-bold text-literary-navy transition group-hover:text-literary-emerald">
@@ -496,15 +491,15 @@ function FeaturedBooksSection() {
                       </h3>
 
                       <p className="mt-2 text-sm text-literary-muted">
-                        By {book.author || "Author"}
+                        از {book.author || "مصنف"}
                       </p>
 
                       <p className="mt-4 line-clamp-3 text-sm leading-7 text-literary-muted">
-                        {book.description || "Discover this literary work."}
+                        {book.description || "اس ادبی تخلیق کو دریافت کیجیے۔"}
                       </p>
 
                       <span className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-literary-emerald">
-                        View Book
+                        کتاب دیکھیے
                         <ArrowRight
                           size={16}
                           className="transition group-hover:translate-x-2"
@@ -523,7 +518,7 @@ function FeaturedBooksSection() {
             to="/books"
             className="inline-flex items-center gap-3 border border-literary-emerald px-8 py-4 text-sm font-bold text-literary-emerald transition duration-300 hover:bg-literary-emerald hover:text-white"
           >
-            View All Books
+            تمام کتب دیکھیے
             <ArrowRight size={18} />
           </Link>
         </div>
@@ -557,7 +552,7 @@ function LiteraryHighlightsSection() {
       .catch((err) => {
         console.error("Literary highlights error:", err);
         if (active) {
-          setError("Literary publications are currently unavailable.");
+          setError("اس وقت ادبی تحریریں دستیاب نہیں۔");
         }
       })
       .finally(() => {
@@ -576,9 +571,9 @@ function LiteraryHighlightsSection() {
       <Container>
         <Reveal>
           <SectionHeading
-            eyebrow="Words That Matter"
-            title="Literary Highlights"
-            description="Explore selected poetry, articles, stories and other literary publications."
+            eyebrow="معنی خیز الفاظ"
+            title="ادبی جھلکیاں"
+            description="منتخب شاعری، مضامین، کہانیوں اور دیگر ادبی تحریروں کا مطالعہ کیجیے۔"
           />
         </Reveal>
 
@@ -597,10 +592,10 @@ function LiteraryHighlightsSection() {
           <div className="mt-12 border border-literary-gold/20 bg-white p-10 text-center">
             <Feather size={36} className="mx-auto text-literary-gold" />
             <h3 className="mt-4 font-serif text-2xl font-bold text-literary-navy">
-              New Publications Coming Soon
+              نئی تحریریں جلد پیش کی جائیں گی
             </h3>
             <p className="mt-3 text-sm text-literary-muted">
-              Published literary works will appear here.
+              شائع شدہ ادبی تخلیقات یہاں دکھائی دیں گی۔
             </p>
           </div>
         ) : (
@@ -630,14 +625,14 @@ function LiteraryHighlightsSection() {
                       <div className="absolute inset-0 bg-gradient-to-t from-literary-dark/60 to-transparent" />
 
                       <span className="absolute bottom-4 left-5 text-[10px] font-bold uppercase tracking-[0.2em] text-literary-gold">
-                        {item.category?.replaceAll("_", " ") || "Literature"}
+                        {item.category?.replaceAll("_", " ") || "ادب"}
                       </span>
                     </div>
 
                     <div className="flex flex-1 flex-col p-7">
                       <div className="flex items-center justify-between gap-3">
                         <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-literary-emerald">
-                          {isUrdu ? "Urdu Publication" : "English Publication"}
+                          {isUrdu ? "اردو اشاعت" : "انگریزی اشاعت"}
                         </span>
 
                         <Globe2 size={15} className="text-literary-gold" />
@@ -660,14 +655,14 @@ function LiteraryHighlightsSection() {
                           isUrdu ? "urdu-content text-right" : ""
                         }`}
                       >
-                        {item.excerpt || "Explore this literary publication."}
+                        {item.excerpt || "اس ادبی تحریر کا مطالعہ کیجیے۔"}
                       </p>
 
                       <Link
                         to={`/literature/${item.slug || item.id}`}
                         className="mt-7 inline-flex items-center gap-2 text-sm font-bold text-literary-emerald transition hover:text-literary-gold"
                       >
-                        Read Publication
+                        تحریر پڑھیے
                         <ArrowRight size={16} />
                       </Link>
                     </div>
@@ -683,7 +678,7 @@ function LiteraryHighlightsSection() {
             to="/literature"
             className="inline-flex items-center gap-3 border border-literary-emerald px-8 py-4 text-sm font-bold text-literary-emerald transition hover:bg-literary-emerald hover:text-white"
           >
-            Explore All Literature
+            تمام ادب دیکھیے
             <ArrowRight size={18} />
           </Link>
         </div>
@@ -702,9 +697,9 @@ function LiteraryCategoriesSection() {
       <Container>
         <Reveal>
           <SectionHeading
-            eyebrow="Explore the Platform"
-            title="Discover a World of Literature"
-            description="Find books, literary publications and resources to explore."
+            eyebrow="پلیٹ فارم کی سیر"
+            title="ادب کی ایک دنیا دریافت کیجیے"
+            description="مطالعے کے لیے کتب، ادبی تحریریں اور علمی وسائل تلاش کیجیے۔"
           />
         </Reveal>
 
@@ -781,7 +776,7 @@ function AuthorSection() {
     };
   }, []);
 
-  const authorName = author?.fullName || "Muhammad Ijaz Ul Haq";
+  const authorName = author?.fullName || "محمد اعجاز الحق";
   const biography = author?.biography || "";
 
   return (
@@ -791,7 +786,7 @@ function AuthorSection() {
       <Container>
         <div className="relative grid items-center gap-16 lg:grid-cols-2">
           <Reveal>
-            <SectionLabel>Meet the Author</SectionLabel>
+            <SectionLabel>مصنف سے ملیے</SectionLabel>
 
             <h2 className="font-serif text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
               {authorName}
@@ -805,11 +800,11 @@ function AuthorSection() {
 
             <p className="mt-8 max-w-xl text-base leading-8 text-white/65">
               {loading
-                ? "Loading author information..."
+                ? "مصنف کی معلومات لوڈ ہو رہی ہیں..."
                 : biography
                   ? biography.slice(0, 450) +
                     (biography.length > 450 ? "..." : "")
-                  : "Explore the literary identity, published works and creative contributions of the author."}
+                  : "مصنف کی ادبی شناخت، شائع شدہ تخلیقات اور علمی خدمات جانیے۔"}
             </p>
 
             {author?.location && (
@@ -822,7 +817,7 @@ function AuthorSection() {
               to="/authors"
               className="group mt-10 inline-flex items-center gap-3 bg-literary-gold px-7 py-4 text-sm font-bold text-literary-dark transition duration-300 hover:-translate-y-1 hover:bg-literary-gold-light"
             >
-              Explore Author Profile
+              مصنف کا تعارف دیکھیے
               <ArrowRight size={18} className="transition group-hover:translate-x-2" />
             </Link>
           </Reveal>
@@ -852,7 +847,7 @@ function AuthorSection() {
                     <div className="mt-7 h-px w-20 bg-literary-gold" />
 
                     <p className="mt-5 text-[10px] uppercase tracking-[0.3em] text-white/60">
-                      Author & Literary Platform
+                      مصنف اور ادبی پلیٹ فارم
                     </p>
                   </div>
                 )}
@@ -891,26 +886,25 @@ function ClosingSection() {
             </div>
 
             <p className="mt-8 text-xs font-bold uppercase tracking-[0.35em] text-literary-gold">
-              Your Literary Journey Awaits
+              آپ کا ادبی سفر منتظر ہے
             </p>
 
             <h2 className="mt-6 font-serif text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
-              Every Book Begins
+              ہر کتاب کا آغاز
               <span className="block text-literary-gold">
-                a Journey.
+                ایک سفر ہے۔
               </span>
             </h2>
 
             <p className="mx-auto mt-7 max-w-xl text-base leading-8 text-white/65">
-              Explore ideas, discover knowledge and experience the
-              beauty of literature. Let every page take you somewhere new.
+              خیالات کی جستجو کیجیے، علم دریافت کیجیے اور ادب کے حسن سے لطف اندوز ہوں۔ ہر صفحہ آپ کو ایک نئی دنیا تک لے جائے۔
             </p>
 
             <Link
               to="/books"
               className="group mt-10 inline-flex items-center gap-3 bg-literary-gold px-9 py-4 text-sm font-bold text-literary-dark transition duration-300 hover:-translate-y-1 hover:bg-literary-gold-light"
             >
-              Start Exploring
+              آغاز کیجیے
               <ArrowRight size={18} className="transition group-hover:translate-x-2" />
             </Link>
           </div>

@@ -28,19 +28,19 @@ export default function BookCard({ book }) {
 
   async function handleAddToCart() {
     if (!authenticated) {
-      setMessage("Please log in before adding books to your cart.");
+      setMessage("کتابیں ٹوکری میں شامل کرنے کے لیے لاگ اِن کریں۔");
       setMessageType("error");
       return;
     }
 
     if (!book.id) {
-      setMessage("Book information is incomplete.");
+      setMessage("کتاب کی معلومات نامکمل ہیں۔");
       setMessageType("error");
       return;
     }
 
     if (book.inStock === false) {
-      setMessage("This book is currently out of stock.");
+      setMessage("یہ کتاب فی الحال دستیاب نہیں۔");
       setMessageType("error");
       return;
     }
@@ -51,7 +51,7 @@ export default function BookCard({ book }) {
 
       await addToCart(book.id, 1);
 
-      setMessage("Book added to your cart successfully.");
+      setMessage("کتاب کامیابی سے ٹوکری میں شامل ہو گئی۔");
       setMessageType("success");
     } catch (error) {
       console.error("Add to cart error:", error);
@@ -64,7 +64,7 @@ export default function BookCard({ book }) {
           : null;
 
       setMessage(
-        String(errorMessage || "Unable to add this book to your cart.")
+        String(errorMessage || "کتاب ٹوکری میں شامل نہیں ہو سکی۔")
       );
       setMessageType("error");
     } finally {
@@ -104,7 +104,7 @@ export default function BookCard({ book }) {
 
           {book.inStock === false && (
             <span className="text-xs font-semibold text-red-600">
-              Out of stock
+              اسٹاک میں موجود نہیں
             </span>
           )}
         </div>
@@ -116,7 +116,7 @@ export default function BookCard({ book }) {
         </Link>
 
         <p className="mt-2 text-sm text-literary-muted">
-          By {book.author}
+          از {book.author}
         </p>
 
         <p className="mt-4 line-clamp-3 flex-1 text-sm leading-7 text-literary-muted">
@@ -126,14 +126,14 @@ export default function BookCard({ book }) {
         <div className="mt-6 border-t border-gray-100 pt-5">
           <div className="mb-4 flex items-center justify-between gap-3">
             <span className="font-bold text-literary-navy">
-              {hasPrice ? `Rs. ${book.price}` : "Price unavailable"}
+              {hasPrice ? `Rs. ${book.price}` : "قیمت دستیاب نہیں"}
             </span>
 
             <Link
               to={bookUrl}
               className="inline-flex items-center gap-2 text-xs font-bold text-literary-navy transition hover:text-literary-gold"
             >
-              View Book
+              کتاب دیکھیے
               <ArrowRight size={15} />
             </Link>
           </div>
@@ -147,12 +147,12 @@ export default function BookCard({ book }) {
             {adding ? (
               <>
                 <LoaderCircle size={17} className="animate-spin" />
-                Adding...
+                شامل کیا جا رہا ہے...
               </>
             ) : (
               <>
                 <ShoppingBag size={17} />
-                {book.inStock === false ? "Out of Stock" : "Add to Cart"}
+                {book.inStock === false ? "اسٹاک میں موجود نہیں" : "ٹوکری میں شامل کریں"}
               </>
             )}
           </button>
@@ -180,7 +180,7 @@ export default function BookCard({ book }) {
                       to="/account"
                       className="font-bold underline underline-offset-2"
                     >
-                      Login here
+                      یہاں لاگ اِن کریں
                     </Link>
                   </>
                 )}

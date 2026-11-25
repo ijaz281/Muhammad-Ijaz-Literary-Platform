@@ -46,7 +46,7 @@ export default function SearchPage() {
         setPublications(getItems(literatureResponse));
       } catch {
         if (active) {
-          setError("Unable to load search results. Please try again.");
+          setError("تلاش کے نتائج لوڈ نہیں ہو سکے۔ براہِ کرم دوبارہ کوشش کریں۔");
         }
       } finally {
         if (active) setLoading(false);
@@ -107,15 +107,15 @@ export default function SearchPage() {
       <Container>
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-sm font-bold uppercase tracking-[0.3em] text-literary-gold">
-            Explore the Collection
+            ادبی ذخیرے کی سیر
           </p>
 
           <h1 className="mt-4 font-serif text-4xl font-bold text-literary-navy sm:text-6xl">
-            Search
+            تلاش کریں
           </h1>
 
           <p className="mt-5 leading-8 text-gray-600">
-            Find books, publications and literary ideas.
+            کتب، تحریریں اور ادبی خیالات تلاش کیجیے۔
           </p>
 
           <form
@@ -125,7 +125,7 @@ export default function SearchPage() {
             <input
               value={query}
               onChange={(event) => setQuery(event.target.value)}
-              placeholder="Search books and literature..."
+              placeholder="کتب اور ادب تلاش کریں..."
               className="min-w-0 flex-1 px-4 py-3 outline-none"
             />
 
@@ -134,7 +134,7 @@ export default function SearchPage() {
               className="flex items-center gap-2 bg-literary-navy px-5 py-3 font-semibold text-white transition hover:bg-literary-gold hover:text-literary-navy"
             >
               <Search size={18} />
-              <span className="hidden sm:inline">Search</span>
+              <span className="hidden sm:inline">تلاش کریں</span>
             </button>
           </form>
         </div>
@@ -155,7 +155,7 @@ export default function SearchPage() {
         {!loading && !error && !hasQuery && (
           <div className="py-20 text-center text-gray-500">
             <Search className="mx-auto mb-4" size={40} />
-            Enter a keyword to explore the collection.
+            ادبی ذخیرے میں تلاش کے لیے کوئی لفظ درج کریں۔
           </div>
         )}
 
@@ -165,17 +165,17 @@ export default function SearchPage() {
               <div className="mb-7 flex items-center justify-between border-b border-gray-200 pb-4">
                 <h2 className="flex items-center gap-3 font-serif text-2xl font-bold text-literary-navy">
                   <BookOpen className="text-literary-gold" />
-                  Books
+                  کتب
                 </h2>
 
                 <span className="text-sm text-gray-500">
-                  {filteredBooks.length} results
+                  {filteredBooks.length} نتائج
                 </span>
               </div>
 
               {filteredBooks.length === 0 ? (
                 <p className="py-8 text-gray-500">
-                  No matching books found.
+                  کوئی متعلقہ کتاب نہیں ملی۔
                 </p>
               ) : (
                 <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -186,7 +186,7 @@ export default function SearchPage() {
                       className="border border-gray-200 bg-white p-6 transition hover:-translate-y-1 hover:shadow-lg"
                     >
                       <p className="text-xs font-bold uppercase tracking-wider text-literary-gold">
-                        {book.category || "Book"}
+                        {book.category || "کتاب"}
                       </p>
 
                       <h3 className="mt-3 font-serif text-xl font-bold text-literary-navy">
@@ -194,15 +194,15 @@ export default function SearchPage() {
                       </h3>
 
                       <p className="mt-2 text-sm text-gray-500">
-                        {book.author || "Muhammad Ijaz Ul Haq"}
+                        {book.author || "محمد اعجاز الحق"}
                       </p>
 
                       <p className="mt-4 line-clamp-3 text-sm leading-7 text-gray-600">
-                        {book.description || "Explore this literary work."}
+                        {book.description || "اس ادبی تخلیق کا مطالعہ کیجیے۔"}
                       </p>
 
                       <span className="mt-5 inline-block text-sm font-bold text-literary-navy">
-                        View Book →
+                        کتاب دیکھیے ←
                       </span>
                     </Link>
                   ))}
@@ -214,17 +214,17 @@ export default function SearchPage() {
               <div className="mb-7 flex items-center justify-between border-b border-gray-200 pb-4">
                 <h2 className="flex items-center gap-3 font-serif text-2xl font-bold text-literary-navy">
                   <Feather className="text-literary-gold" />
-                  Literature
+                  ادب
                 </h2>
 
                 <span className="text-sm text-gray-500">
-                  {filteredPublications.length} results
+                  {filteredPublications.length} نتائج
                 </span>
               </div>
 
               {filteredPublications.length === 0 ? (
                 <p className="py-8 text-gray-500">
-                  No matching publications found.
+                  کوئی متعلقہ تحریر نہیں ملی۔
                 </p>
               ) : (
                 <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -235,7 +235,7 @@ export default function SearchPage() {
                       className="border border-gray-200 bg-white p-6 transition hover:-translate-y-1 hover:shadow-lg"
                     >
                       <p className="text-xs font-bold uppercase tracking-wider text-literary-gold">
-                        {item.category || "Publication"}
+                        {item.category || "تحریر"}
                       </p>
 
                       <h3 className="mt-3 font-serif text-xl font-bold text-literary-navy">
@@ -243,11 +243,11 @@ export default function SearchPage() {
                       </h3>
 
                       <p className="mt-4 line-clamp-4 text-sm leading-7 text-gray-600">
-                        {item.excerpt || "Explore this literary publication."}
+                        {item.excerpt || "اس ادبی تحریر کا مطالعہ کیجیے۔"}
                       </p>
 
                       <span className="mt-5 inline-block text-sm font-bold text-literary-navy">
-                        Read More →
+                        مزید پڑھیے ←
                       </span>
                     </Link>
                   ))}

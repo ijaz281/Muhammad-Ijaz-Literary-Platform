@@ -1,27 +1,27 @@
 
 export const mainNavigation = [
   {
-    label: "Home",
+    label: "صفحۂ اوّل",
     path: "/",
   },
   {
-    label: "About",
+    label: "تعارف",
     path: "/about",
   },
   {
-    label: "Books",
+    label: "کتب",
     path: "/books",
   },
   {
-    label: "Literature",
+    label: "ادب",
     path: "/literature",
   },
   {
-    label: "Authors",
+    label: "مصنفین",
     path: "/authors",
   },
   {
-    label: "Contact",
+    label: "رابطہ",
     path: "/contact",
   },
 ];

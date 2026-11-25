@@ -59,7 +59,7 @@ export default function ContactPage() {
       });
 
       setSuccess(
-        "Message sent successfully! Thank you for contacting us. Your message has been received. We will get back to you soon."
+        "آپ کا پیغام موصول ہو گیا، رابطہ کرنے کا شکریہ۔ ہم جلد آپ سے رابطہ کریں گے۔"
       );
 
       setForm(initialForm);
@@ -68,7 +68,7 @@ export default function ContactPage() {
       const data = err.response?.data;
 
       let errorMessage =
-        "Unable to send your message. Please try again later.";
+        "آپ کا پیغام نہیں بھیجا جا سکا۔ براہِ کرم کچھ دیر بعد دوبارہ کوشش کریں۔";
 
       if (typeof data?.detail === "string") {
         errorMessage = data.detail;
@@ -98,16 +98,16 @@ export default function ContactPage() {
         <div className="mx-auto max-w-3xl text-center">
 
           <p className="text-sm font-bold uppercase tracking-[0.3em] text-literary-gold">
-            Get in Touch
+            رابطے میں رہیے
           </p>
 
           <h1 className="mt-4 font-serif text-4xl font-bold text-literary-navy sm:text-6xl">
-            Contact
+            رابطہ
           </h1>
 
           <p className="mx-auto mt-6 max-w-2xl leading-8 text-gray-600">
-            Have a question, suggestion or literary inquiry?
-            Send a message and get in touch.
+            کوئی سوال، تجویز یا ادبی استفسار ہے؟
+            ہمیں پیغام بھیجیے اور رابطہ قائم کیجیے۔
           </p>
 
         </div>
@@ -122,12 +122,12 @@ export default function ContactPage() {
           <div className="bg-literary-navy p-8 text-white sm:p-10">
 
             <h2 className="font-serif text-2xl font-bold">
-              Let's Connect
+              آئیے رابطہ قائم کریں
             </h2>
 
             <p className="mt-5 leading-8 text-gray-300">
-              Your thoughts and feedback are valuable.
-              Feel free to reach out.
+              آپ کی آرا اور تجاویز ہمارے لیے قیمتی ہیں۔
+              بلا جھجھک ہم سے رابطہ کیجیے۔
             </p>
 
             <div className="mt-10 space-y-7">
@@ -138,11 +138,11 @@ export default function ContactPage() {
 
                 <div>
                   <p className="font-semibold">
-                    Email
+                    ای میل
                   </p>
 
                   <p className="mt-1 break-all text-sm text-gray-300">
-                    Send your inquiry through the contact form.
+                    رابطہ فارم کے ذریعے اپنا پیغام بھیجیے۔
                   </p>
                 </div>
 
@@ -155,11 +155,11 @@ export default function ContactPage() {
 
                 <div>
                   <p className="font-semibold">
-                    Literary Platform
+                    ادبی پلیٹ فارم
                   </p>
 
                   <p className="mt-1 text-sm text-gray-300">
-                    Muhammad Ijaz Ul Haq
+                    محمد اعجاز الحق
                   </p>
                 </div>
 
@@ -222,7 +222,7 @@ export default function ContactPage() {
                   htmlFor="contact-name"
                   className="mb-2 block text-sm font-semibold text-gray-700"
                 >
-                  Your Name
+                  آپ کا نام
                 </label>
 
                 <input
@@ -235,7 +235,7 @@ export default function ContactPage() {
                   autoComplete="name"
                   disabled={loading}
                   className="w-full border border-gray-300 px-4 py-3 outline-none focus:border-literary-gold disabled:bg-gray-100"
-                  placeholder="Enter your name"
+                  placeholder="اپنا نام درج کریں"
                 />
 
               </div>
@@ -247,7 +247,7 @@ export default function ContactPage() {
                   htmlFor="contact-email"
                   className="mb-2 block text-sm font-semibold text-gray-700"
                 >
-                  Email Address
+                  ای میل ایڈریس
                 </label>
 
                 <input
@@ -260,7 +260,7 @@ export default function ContactPage() {
                   autoComplete="email"
                   disabled={loading}
                   className="w-full border border-gray-300 px-4 py-3 outline-none focus:border-literary-gold disabled:bg-gray-100"
-                  placeholder="you@example.com"
+                  placeholder="مثلاً: name@example.com"
                 />
 
               </div>
@@ -276,7 +276,7 @@ export default function ContactPage() {
                 htmlFor="contact-subject"
                 className="mb-2 block text-sm font-semibold text-gray-700"
               >
-                Subject
+                موضوع
               </label>
 
               <input
@@ -288,7 +288,7 @@ export default function ContactPage() {
                 maxLength={255}
                 disabled={loading}
                 className="w-full border border-gray-300 px-4 py-3 outline-none focus:border-literary-gold disabled:bg-gray-100"
-                placeholder="Message subject"
+                placeholder="پیغام کا موضوع"
               />
 
             </div>
@@ -302,7 +302,7 @@ export default function ContactPage() {
                 htmlFor="contact-message"
                 className="mb-2 block text-sm font-semibold text-gray-700"
               >
-                Your Message
+                آپ کا پیغام
               </label>
 
               <textarea
@@ -315,7 +315,7 @@ export default function ContactPage() {
                 rows={6}
                 disabled={loading}
                 className="w-full resize-y border border-gray-300 px-4 py-3 outline-none focus:border-literary-gold disabled:bg-gray-100"
-                placeholder="Write your message..."
+                placeholder="اپنا پیغام تحریر کریں..."
               />
 
             </div>
@@ -338,7 +338,7 @@ export default function ContactPage() {
                 <Send size={18} />
               )}
 
-              {loading ? "Sending..." : "Send Message"}
+              {loading ? "بھیجا جا رہا ہے..." : "پیغام بھیجیں"}
 
             </button>
 

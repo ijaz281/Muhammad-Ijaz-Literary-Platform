@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 
 export default function LiteratureCard({ item }) {
-  const title = item?.title || "Untitled Publication";
+  const title = item?.title || "بلا عنوان تحریر";
   const slug = item?.slug;
   const excerpt = item?.excerpt || "";
-  const category = item?.category || "Literature";
+  const category = item?.category || "ادب";
   const language = item?.language || "ur";
 
   return (
@@ -20,7 +20,7 @@ export default function LiteratureCard({ item }) {
           </span>
 
           <span className="text-xs font-medium uppercase tracking-wider text-gray-500">
-            {language === "ur" ? "Urdu" : "English"}
+            {language === "ur" ? "اردو" : "انگریزی"}
           </span>
         </div>
 
@@ -35,7 +35,7 @@ export default function LiteratureCard({ item }) {
           dir={language === "ur" ? "rtl" : "ltr"}
           className="mb-6 flex-1 text-sm leading-7 text-gray-600"
         >
-          {excerpt || "Discover this literary publication and explore its content."}
+          {excerpt || "اس ادبی تحریر کو دریافت کریں اور اس کے متن کا مطالعہ کریں۔"}
         </p>
 
         {slug ? (
@@ -43,12 +43,12 @@ export default function LiteratureCard({ item }) {
             to={`/literature/${slug}`}
             className="inline-flex items-center gap-2 font-semibold text-amber-700 transition-colors hover:text-amber-900"
           >
-            Read Publication
+            تحریر پڑھیے
             <ArrowRight size={17} />
           </Link>
         ) : (
           <span className="text-sm text-gray-400">
-            Details unavailable
+            تفصیلات دستیاب نہیں
           </span>
         )}
       </div>

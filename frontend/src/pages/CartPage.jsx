@@ -50,7 +50,7 @@ export default function CartPage() {
       const data = await getCart();
       setCart(data);
     } catch {
-      setError("Unable to load your cart. Please try again.");
+      setError("خریداری کی ٹوکری لوڈ نہیں ہو سکی۔ دوبارہ کوشش کریں۔");
     } finally {
       setLoading(false);
     }
@@ -80,7 +80,7 @@ export default function CartPage() {
           ? Object.values(data).flat()[0]
           : null;
 
-      setError(String(firstError || "Unable to update item quantity."));
+      setError(String(firstError || "اشیا کی تعداد اپ ڈیٹ نہیں ہو سکی۔"));
     } finally {
       setUpdating(null);
     }
@@ -94,7 +94,7 @@ export default function CartPage() {
       await removeCartItem(itemId);
       await loadCart();
     } catch {
-      setError("Unable to remove this item.");
+      setError("یہ شے حذف نہیں ہو سکی۔");
     } finally {
       setUpdating(null);
     }
@@ -125,9 +125,9 @@ export default function CartPage() {
 
       if (data && typeof data === "object") {
         const firstError = Object.values(data).flat()[0];
-        setError(String(firstError || "Checkout could not be completed."));
+        setError(String(firstError || "چیک آؤٹ مکمل نہیں ہو سکا۔"));
       } else {
-        setError("Checkout could not be completed. Please try again.");
+        setError("چیک آؤٹ مکمل نہیں ہو سکا۔ براہِ کرم دوبارہ کوشش کریں۔");
       }
     } finally {
       setLoading(false);
@@ -149,11 +149,11 @@ export default function CartPage() {
       <Container>
         <div className="text-center">
           <p className="text-sm font-bold uppercase tracking-[0.3em] text-literary-gold">
-            Your Selection
+            آپ کا انتخاب
           </p>
 
           <h1 className="mt-4 font-serif text-4xl font-bold text-literary-navy sm:text-6xl">
-            Shopping Cart
+            خریداری کی ٹوکری
           </h1>
         </div>
 
@@ -165,18 +165,18 @@ export default function CartPage() {
             />
 
             <h2 className="mt-5 font-serif text-2xl font-bold text-literary-navy">
-              Login Required
+              لاگ اِن ضروری ہے
             </h2>
 
             <p className="mt-3 leading-7 text-gray-600">
-              Please log in to access your personal shopping cart.
+              اپنی ذاتی خریداری کی ٹوکری تک رسائی کے لیے لاگ اِن کریں۔
             </p>
 
             <Link
               to="/account"
               className="mt-7 inline-block bg-literary-navy px-8 py-4 font-semibold text-white hover:bg-literary-gold hover:text-literary-navy"
             >
-              Login to Continue
+              جاری رکھنے کے لیے لاگ اِن کریں
             </Link>
           </div>
         ) : loading && !order ? (
@@ -194,26 +194,26 @@ export default function CartPage() {
             />
 
             <h2 className="mt-5 font-serif text-3xl font-bold text-literary-navy">
-              Order Placed
+              آرڈر مکمل ہو گیا
             </h2>
 
             <p className="mt-4 text-gray-600">
-              Your order has been submitted successfully.
+              آپ کا آرڈر کامیابی سے جمع ہو گیا ہے۔
             </p>
 
             <p className="mt-5 break-all bg-gray-50 p-4 text-sm">
-              Order Number: {order.order_number}
+              آرڈر نمبر: {order.order_number}
             </p>
 
             <p className="mt-4 font-bold text-literary-navy">
-              Total: {formatPrice(order.total_amount)}
+              کل رقم: {formatPrice(order.total_amount)}
             </p>
 
             <Link
               to="/account"
               className="mt-7 inline-block bg-literary-navy px-8 py-4 font-semibold text-white hover:bg-literary-gold hover:text-literary-navy"
             >
-              My Account
+              میرا اکاؤنٹ
             </Link>
           </div>
         ) : (
@@ -232,18 +232,18 @@ export default function CartPage() {
                 />
 
                 <h2 className="mt-5 font-serif text-2xl font-bold text-literary-navy">
-                  Your Cart is Empty
+                  آپ کی ٹوکری خالی ہے
                 </h2>
 
                 <p className="mt-3 text-gray-600">
-                  Explore the bookstore and discover your next read.
+                  کتب خانے کی سیر کریں اور اپنی اگلی پسندیدہ کتاب دریافت کریں۔
                 </p>
 
                 <Link
                   to="/books"
                   className="mt-7 inline-block bg-literary-navy px-8 py-4 font-semibold text-white hover:bg-literary-gold hover:text-literary-navy"
                 >
-                  Explore Books
+                  کتب دیکھیے
                 </Link>
               </div>
             ) : (
@@ -318,7 +318,7 @@ export default function CartPage() {
                           className="flex items-center gap-2 text-sm font-semibold text-red-600 hover:text-red-800 disabled:opacity-40"
                         >
                           <Trash2 size={16} />
-                          Remove
+                          حذف کریں
                         </button>
                       </div>
                     </article>
@@ -327,12 +327,12 @@ export default function CartPage() {
 
                 <aside className="border border-gray-200 bg-white p-7">
                   <h2 className="font-serif text-2xl font-bold text-literary-navy">
-                    Order Summary
+                    آرڈر کا خلاصہ
                   </h2>
 
                   <div className="mt-7 flex justify-between border-b border-gray-200 pb-5 text-sm">
                     <span className="text-gray-600">
-                      Items ({cart?.total_items || 0})
+                      اشیا ({cart?.total_items || 0})
                     </span>
 
                     <span className="font-semibold">
@@ -342,7 +342,7 @@ export default function CartPage() {
 
                   <div className="mt-5 flex justify-between">
                     <span className="font-bold text-literary-navy">
-                      Subtotal
+                      ذیلی مجموعہ
                     </span>
 
                     <span className="font-bold text-literary-navy">
@@ -351,15 +351,14 @@ export default function CartPage() {
                   </div>
 
                   <p className="mt-4 text-xs leading-6 text-gray-500">
-                    Shipping charges, if applicable, will be calculated
-                    during order processing.
+                    اگر ترسیلی اخراجات لاگو ہوئے تو آرڈر کی کارروائی کے دوران ان کا حساب کیا جائے گا۔
                   </p>
 
                   <button
                     onClick={() => setShowCheckout(!showCheckout)}
                     className="mt-8 w-full bg-literary-navy px-5 py-4 font-semibold text-white transition hover:bg-literary-gold hover:text-literary-navy"
                   >
-                    {showCheckout ? "Hide Checkout" : "Proceed to Checkout"}
+                    {showCheckout ? "چیک آؤٹ بند کریں" : "چیک آؤٹ کی طرف بڑھیں"}
                   </button>
                 </aside>
               </div>
@@ -368,11 +367,11 @@ export default function CartPage() {
             {showCheckout && items.length > 0 && (
               <section className="mt-10 border border-gray-200 bg-white p-7 sm:p-10">
                 <h2 className="font-serif text-2xl font-bold text-literary-navy">
-                  Shipping Information
+                  ترسیل کی معلومات
                 </h2>
 
                 <p className="mt-2 text-sm text-gray-500">
-                  Enter the address where you want your books delivered.
+                  وہ پتہ درج کریں جہاں آپ اپنی کتب وصول کرنا چاہتے ہیں۔
                 </p>
 
                 <form
@@ -380,14 +379,14 @@ export default function CartPage() {
                   className="mt-8 grid gap-5 sm:grid-cols-2"
                 >
                   {[
-                    ["full_name", "Full Name", true],
-                    ["phone", "Phone Number", true],
-                    ["address_line_1", "Address Line 1", true],
-                    ["address_line_2", "Address Line 2", false],
-                    ["city", "City", true],
-                    ["state", "State / Province", false],
-                    ["postal_code", "Postal Code", false],
-                    ["country", "Country", true],
+                    ["full_name", "مکمل نام", true],
+                    ["phone", "فون نمبر", true],
+                    ["address_line_1", "پتہ، پہلی سطر", true],
+                    ["address_line_2", "پتہ، دوسری سطر", false],
+                    ["city", "شہر", true],
+                    ["state", "صوبہ", false],
+                    ["postal_code", "پوسٹل کوڈ", false],
+                    ["country", "ملک", true],
                   ].map(([name, label, required]) => (
                     <div
                       key={name}
@@ -413,7 +412,7 @@ export default function CartPage() {
 
                   <div className="sm:col-span-2">
                     <label className="mb-2 block text-sm font-semibold text-gray-700">
-                      Order Notes (Optional)
+                      آرڈر سے متعلق نوٹ (اختیاری)
                     </label>
 
                     <textarea
@@ -438,7 +437,7 @@ export default function CartPage() {
                         />
                       )}
 
-                      Place Order
+                      آرڈر مکمل کریں
                     </button>
                   </div>
                 </form>

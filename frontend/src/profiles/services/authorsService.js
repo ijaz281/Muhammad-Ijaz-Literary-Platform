@@ -17,9 +17,9 @@ function getImageUrl(image) {
 function normalizeAuthor(author) {
   return {
     id: author.id,
-    fullName: author.full_name || "Author",
+    fullName: author.full_name || "مصنف",
     penName: author.pen_name || "",
-    headline: author.headline || "Author & Literary Contributor",
+    headline: author.headline || "مصنف اور ادبی قلم کار",
     biography: author.biography || "",
     profileImage: getImageUrl(author.profile_image),
     coverImage: getImageUrl(author.cover_image),

@@ -55,7 +55,7 @@ export default function BooksPage() {
           setCategories(categoryData);
         } else {
           console.error(
-            "Categories loading error:",
+            "اصناف لوڈ کرنے میں مسئلہ:",
             categoryResult.reason
           );
 
@@ -66,7 +66,7 @@ export default function BooksPage() {
 
         if (active) {
           setError(
-            "Unable to load the bookstore. Please check your backend connection."
+            "کتب خانہ لوڈ نہیں ہو سکا۔ براہِ کرم سرور کنکشن چیک کریں۔"
           );
         }
       } finally {
@@ -121,16 +121,15 @@ export default function BooksPage() {
             <BookOpen size={42} className="mb-6 text-literary-gold" />
 
             <p className="mb-4 text-xs font-bold uppercase tracking-[0.3em] text-literary-gold">
-              Discover Literature
+              ادب دریافت کیجیے
             </p>
 
             <h1 className="font-serif text-4xl font-bold sm:text-6xl">
-              Explore Our Books
+              ہماری کتب دیکھیے
             </h1>
 
             <p className="mt-6 max-w-2xl text-sm leading-8 text-gray-300 sm:text-base">
-              Discover books, explore authors and find literary works
-              that inspire imagination, knowledge and creativity.
+              کتب دریافت کیجیے، مصنفین سے ملیے اور ایسی ادبی تخلیقات تلاش کیجیے جو تخیل، علم اور تخلیقی صلاحیت کو جِلا بخشیں۔
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
@@ -138,14 +137,14 @@ export default function BooksPage() {
                 to="/literature"
                 className="inline-flex items-center border border-white/30 px-6 py-3 text-sm font-semibold transition hover:border-literary-gold hover:text-literary-gold"
               >
-                Explore Literature
+                ادب کی سیر
               </Link>
 
               <Link
                 to="/authors"
                 className="inline-flex items-center bg-literary-gold px-6 py-3 text-sm font-bold text-literary-navy transition hover:bg-white"
               >
-                Meet the Authors
+                مصنفین سے ملیے
               </Link>
             </div>
           </div>
@@ -170,7 +169,7 @@ export default function BooksPage() {
               />
 
               <p className="mt-5 text-sm text-literary-muted">
-                Loading our book collection...
+                کتب کا ذخیرہ لوڈ ہو رہا ہے...
               </p>
             </div>
           ) : error ? (
@@ -183,7 +182,7 @@ export default function BooksPage() {
                 className="mt-6 inline-flex items-center gap-2 bg-literary-navy px-6 py-3 text-sm font-bold text-white transition hover:bg-literary-gold hover:text-literary-navy"
               >
                 <RefreshCw size={16} />
-                Try Again
+                دوبارہ کوشش کریں
               </button>
             </div>
           ) : (
@@ -191,11 +190,11 @@ export default function BooksPage() {
               <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
                 <div>
                   <h2 className="font-serif text-2xl font-bold text-literary-navy">
-                    Book Collection
+                    کتب کا ذخیرہ
                   </h2>
 
                   <p className="mt-2 text-sm text-literary-muted">
-                    Showing {filteredBooks.length} of {books.length} books
+                    {filteredBooks.length} میں سے {books.length} کتب دکھائی جا رہی ہیں
                   </p>
                 </div>
 
@@ -205,7 +204,7 @@ export default function BooksPage() {
                     onClick={clearFilters}
                     className="text-sm font-semibold text-literary-gold underline underline-offset-4"
                   >
-                    Clear all filters
+                    تمام فلٹرز ختم کریں
                   </button>
                 )}
               </div>

@@ -22,7 +22,7 @@ export default function Logo({ light = false, onClick }) {
             light ? "text-white" : "text-literary-navy"
           }`}
         >
-          اعجازِ سخن
+          محمد اعجاز الحق
         </span>
         <span className="font-urdu text-[14px] leading-7 text-literary-gold">
           ادبی پلیٹ فارم

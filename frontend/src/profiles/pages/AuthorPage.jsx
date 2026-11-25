@@ -110,7 +110,7 @@ function AuthorPortrait({ author }) {
         {portraitUrl && !imageError ? (
           <img
             src={portraitUrl}
-            alt={`Portrait of ${author.fullName || "Author"}`}
+            alt={`Portrait of ${author.fullName || "مصنف"}`}
             onError={() => setImageError(true)}
             className="h-full w-full object-cover object-top"
             loading="eager"
@@ -128,7 +128,7 @@ function AuthorPortrait({ author }) {
             </h3>
 
             <p className="mt-3 text-sm tracking-widest text-literary-gold">
-              AUTHOR PORTRAIT
+              مصنف کی تصویر
             </p>
           </div>
         )}
@@ -138,7 +138,7 @@ function AuthorPortrait({ author }) {
 
         <div className="absolute bottom-6 left-6 right-6">
           <p className="text-xs uppercase tracking-[0.3em] text-literary-gold">
-            Literary Collection
+            ادبی ذخیرہ
           </p>
 
           <p className="mt-2 font-serif text-2xl font-bold text-white">
@@ -179,7 +179,7 @@ function AuthorCard({ author }) {
             <span className="h-px w-12 bg-literary-gold" />
 
             <p className="text-xs font-bold uppercase tracking-[0.35em] text-literary-gold">
-              Featured Author
+              نمایاں مصنف
             </p>
           </div>
 
@@ -212,7 +212,7 @@ function AuthorCard({ author }) {
           )}
 
           <div className="mt-9 max-w-2xl whitespace-pre-line text-sm leading-8 text-gray-300 sm:text-base">
-            {author.biography || "Biography will be updated soon."}
+            {author.biography || "تعارف جلد اپ ڈیٹ کیا جائے گا۔"}
           </div>
 
           {/* Literary quotation decoration */}
@@ -223,26 +223,26 @@ function AuthorCard({ author }) {
             />
 
             <p className="font-serif text-lg italic leading-8 text-gray-300">
-              Every book is a journey, and every word leaves a mark.
+              ہر کتاب ایک سفر ہے اور ہر لفظ اپنا نشان چھوڑتا ہے۔
             </p>
           </div>
 
           {/* Social links */}
           <div className="mt-9 flex flex-wrap items-center gap-3">
 
-            <SocialLink href={author.website} label="Website">
+            <SocialLink href={author.website} label="ویب سائٹ">
               <Globe size={19} />
             </SocialLink>
 
-            <SocialLink href={author.facebook} label="Facebook">
+            <SocialLink href={author.facebook} label="فیس بک">
               <span className="font-bold">f</span>
             </SocialLink>
 
-            <SocialLink href={author.instagram} label="Instagram">
+            <SocialLink href={author.instagram} label="انسٹاگرام">
             IG
             </SocialLink>
 
-            <SocialLink href={author.youtube} label="YouTube">
+            <SocialLink href={author.youtube} label="یوٹیوب">
             YT
             </SocialLink>
 
@@ -252,14 +252,14 @@ function AuthorCard({ author }) {
                 className="inline-flex items-center gap-2 bg-literary-gold px-5 py-3 text-sm font-bold text-literary-navy transition duration-300 hover:-translate-y-1 hover:bg-white"
               >
                 <Mail size={17} />
-                Contact Author
+                مصنف سے رابطہ کریں
               </a>
             )}
           </div>
 
           <div className="mt-10 flex items-center gap-3 text-xs uppercase tracking-[0.25em] text-literary-gold/70">
             <Sparkles size={16} />
-            Words • Literature • Legacy
+            الفاظ • ادب • ورثہ
           </div>
         </div>
 
@@ -302,7 +302,7 @@ export default function AuthorPage({ mode = "authors" }) {
         console.error("Author page error:", err);
 
         if (active) {
-          setError("Unable to load author profiles. Please try again.");
+          setError("مصنفین کے تعارف لوڈ نہیں ہو سکے۔ دوبارہ کوشش کریں۔");
         }
       } finally {
         if (active) {
@@ -334,20 +334,20 @@ export default function AuthorPage({ mode = "authors" }) {
               <Feather className="text-literary-gold" size={22} />
 
               <p className="text-xs font-bold uppercase tracking-[0.4em] text-literary-gold">
-                Muhammad Ijaz Ul Haq Literary Platform
+                محمد اعجاز الحق کا ادبی پلیٹ فارم
               </p>
 
               <Feather className="text-literary-gold" size={22} />
             </div>
 
             <h1 className="font-serif text-5xl font-bold leading-tight sm:text-6xl lg:text-7xl">
-              {isAbout ? "A World of Literature" : "Voices Behind the Words"}
+              {isAbout ? "ادب کی ایک دنیا" : "الفاظ کے پسِ پردہ آوازیں"}
             </h1>
 
             <p className="mx-auto mt-7 max-w-2xl text-sm leading-8 text-gray-300 sm:text-lg">
               {isAbout
-                ? "A dedicated home for literature, creativity, knowledge and meaningful ideas."
-                : "Discover the writers, their stories, their identities and the thoughts that shape their literary journeys."}
+                ? "ادب، تخلیق، علم اور بامعنی خیالات کے لیے ایک مختص پلیٹ فارم۔"
+                : "ادیبوں کی کہانیاں، ان کی شناخت اور ان کے ادبی سفر کو تشکیل دینے والے خیالات جانیے۔"}
             </p>
 
             <div className="mx-auto mt-10 flex items-center justify-center gap-4">
@@ -368,31 +368,24 @@ export default function AuthorPage({ mode = "authors" }) {
             <div className="mx-auto max-w-4xl">
 
               <SectionHeading
-                eyebrow="Our Purpose"
-                title="A Platform Built Around Literature"
-                description="Bringing books, publications, authors and readers together in one literary space."
+                eyebrow="ہمارا مقصد"
+                title="ادب کے گرد قائم ایک پلیٹ فارم"
+                description="کتب، تحریروں، مصنفین اور قارئین کو ایک ادبی مرکز پر یکجا کرنا۔"
                 align="left"
               />
 
               <div className="mt-10 space-y-6 text-base leading-8 text-literary-muted">
 
                 <p>
-                  The Muhammad Ijaz Ul Haq Literary Platform is designed
-                  to present literary works and provide readers with an
-                  accessible place to explore books, poetry, articles,
-                  stories and other publications.
+                  محمد اعجاز الحق کا ادبی پلیٹ فارم ادبی تخلیقات پیش کرنے اور قارئین کو کتب، شاعری، مضامین، کہانیوں اور دیگر تحریروں تک آسان رسائی فراہم کرنے کے لیے بنایا گیا ہے۔
                 </p>
 
                 <p>
-                  The platform aims to encourage reading, support
-                  literary expression and make published work easier
-                  to discover.
+                  اس پلیٹ فارم کا مقصد مطالعے کو فروغ دینا، ادبی اظہار کی حوصلہ افزائی کرنا اور شائع شدہ تخلیقات کو آسانی سے دریافت کرنے کا موقع فراہم کرنا ہے۔
                 </p>
 
                 <p>
-                  Through its bookstore and literary collection,
-                  visitors can explore different forms of writing
-                  and learn more about the authors behind them.
+                  کتب خانے اور ادبی ذخیرے کے ذریعے قارئین تحریر کی مختلف اصناف کا مطالعہ کر سکتے ہیں اور ان کے تخلیق کاروں کے بارے میں جان سکتے ہیں۔
                 </p>
 
               </div>
@@ -403,14 +396,14 @@ export default function AuthorPage({ mode = "authors" }) {
                   to="/books"
                   className="inline-flex items-center gap-2 bg-literary-navy px-6 py-3 text-sm font-bold text-white transition hover:bg-literary-gold hover:text-literary-navy"
                 >
-                  Explore Books <ArrowRight size={17} />
+                  کتب دیکھیے <ArrowRight size={17} />
                 </Link>
 
                 <Link
                   to="/literature"
                   className="inline-flex items-center gap-2 border border-literary-navy px-6 py-3 text-sm font-bold text-literary-navy transition hover:bg-literary-navy hover:text-white"
                 >
-                  Read Literature <ArrowRight size={17} />
+                  ادب پڑھیے <ArrowRight size={17} />
                 </Link>
 
               </div>
@@ -426,9 +419,9 @@ export default function AuthorPage({ mode = "authors" }) {
         <Container>
 
           <SectionHeading
-            eyebrow={isAbout ? "The People Behind the Platform" : "Author Directory"}
-            title={isAbout ? "Meet Our Author" : "Our Distinguished Authors"}
-            description="Explore literary identities, personal journeys and creative contributions."
+            eyebrow={isAbout ? "پلیٹ فارم سے وابستہ شخصیات" : "مصنفین کی فہرست"}
+            title={isAbout ? "ہمارے مصنف سے ملیے" : "ہمارے ممتاز مصنفین"}
+            description="ادبی شناخت، ذاتی سفر اور تخلیقی خدمات دریافت کیجیے۔"
           />
 
           {loading && (
@@ -449,7 +442,7 @@ export default function AuthorPage({ mode = "authors" }) {
                 onClick={() => window.location.reload()}
                 className="mt-5 font-bold text-literary-navy underline"
               >
-                Reload Page
+                صفحہ دوبارہ لوڈ کریں
               </button>
             </div>
           )}
@@ -463,12 +456,11 @@ export default function AuthorPage({ mode = "authors" }) {
               />
 
               <h2 className="mt-5 font-serif text-2xl font-bold text-literary-navy">
-                Author Profile Coming Soon
+                مصنف کا تعارف جلد پیش کیا جائے گا
               </h2>
 
               <p className="mt-3 text-sm leading-7 text-literary-muted">
-                Author information will appear here once an active
-                profile has been added through the administration panel.
+                انتظامی پینل کے ذریعے مصنف کا فعال پروفائل شامل ہوتے ہی اس کی معلومات یہاں دکھائی دیں گی۔
               </p>
 
             </div>
@@ -500,19 +492,18 @@ export default function AuthorPage({ mode = "authors" }) {
             />
 
             <h2 className="mt-6 font-serif text-3xl font-bold sm:text-4xl">
-              Explore the World of Literature
+              ادب کی دنیا دریافت کیجیے
             </h2>
 
             <p className="mx-auto mt-5 max-w-xl text-sm leading-8 text-gray-300">
-              Discover meaningful words, remarkable books and
-              the writers who bring ideas to life.
+              بامعنی الفاظ، قابلِ ذکر کتب اور خیالات کو زندگی دینے والے لکھاریوں کو جانیے۔
             </p>
 
             <Link
               to="/literature"
               className="mt-8 inline-flex items-center gap-3 bg-literary-gold px-8 py-4 font-bold text-literary-navy transition duration-300 hover:-translate-y-1 hover:bg-white"
             >
-              Discover Literature
+              ادب دریافت کیجیے
               <ArrowRight size={18} />
             </Link>
 
