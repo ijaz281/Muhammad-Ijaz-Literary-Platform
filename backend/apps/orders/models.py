@@ -114,6 +114,7 @@ class Order(models.Model):
         COD = "cod", "Cash on Delivery"
         JAZZCASH = "jazzcash", "JazzCash"
         EASYPAISA = "easypaisa", "Easypaisa"
+        RAAST = "raast", "Raast QR"
         BANK_TRANSFER = "bank_transfer", "Bank Transfer"
         LEGACY = "legacy", "Legacy / Not Specified"
 

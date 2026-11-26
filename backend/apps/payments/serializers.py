@@ -9,7 +9,8 @@ class PaymentSerializer(serializers.ModelSerializer):
         model = Payment
         fields = ["id", "payment_reference", "order", "order_number", "provider",
                   "status", "amount", "currency", "transaction_id",
-                  "gateway_reference", "failure_reason", "paid_at", "created_at"]
+                  "gateway_reference", "failure_reason", "paid_at", "created_at",
+                  "submitted_at"]
         read_only_fields = fields
 
 

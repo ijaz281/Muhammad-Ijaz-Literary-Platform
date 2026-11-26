@@ -8,12 +8,12 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from apps.bookstore.models import Book
+from apps.payments.models import Payment
 from .models import ShippingAddress, ShoppingCart, CartItem, Order, OrderItem
 from .serializers import (
     ShippingAddressSerializer, CartSerializer, AddCartItemSerializer,
     UpdateCartItemSerializer, OrderSerializer, CheckoutSerializer,
 )
-from .email_service import send_order_notifications
 
 
 def active_cart_for(user):
@@ -155,14 +155,13 @@ class CheckoutView(APIView):
         total = subtotal + shipping_fee
         order = Order.objects.create(
             user=request.user,
-            customer_email=getattr(request.user, "email", "") or "",
             subtotal=subtotal,
             shipping_fee=shipping_fee,
             tax_amount=Decimal("0.00"),
             discount_amount=Decimal("0.00"),
             total_amount=total,
-            customer_notes=data.get("customer_notes", ""),
             payment_method=data.get("payment_method", Order.PaymentMethod.COD),
+            customer_notes=data.get("customer_notes", ""),
             **shipping,
         )
         for item in items:
@@ -176,13 +175,18 @@ class CheckoutView(APIView):
             book.stock_quantity -= item.quantity
             book.save(update_fields=["stock_quantity", "updated_at"])
 
+        if order.payment_method != Order.PaymentMethod.COD:
+            Payment.objects.create(
+                order=order,
+                user=request.user,
+                provider=order.payment_method,
+                amount=order.total_amount,
+                currency="PKR",
+                status=Payment.Status.PENDING,
+            )
+
         cart.status = ShoppingCart.Status.CONVERTED
         cart.save(update_fields=["status", "updated_at"])
-
-        transaction.on_commit(
-            lambda order_id=order.pk: send_order_notifications(order_id),
-            robust=True,
-        )
         return Response(OrderSerializer(order).data, status=status.HTTP_201_CREATED)
 
 

@@ -1,11 +1,10 @@
-
 from django.contrib import admin
 from django.urls import path, include
 from django.http import JsonResponse
 from django.conf import settings
 from django.conf.urls.static import static
-
-from rest_framework_simplejwt.views import TokenRefreshView
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from apps.payments.views import PaymentProofView
 
 
 def home(request):
@@ -34,15 +33,11 @@ def home(request):
 
 urlpatterns = [
     path("", home, name="home"),
+    path("admin/payment-proof/<int:payment_id>/", PaymentProofView.as_view(), name="admin-payment-proof"),
     path("admin/", admin.site.urls),
 
-    # OTP-based login is provided by apps.users.urls.
-    path(
-        "api/auth/token/refresh/",
-        TokenRefreshView.as_view(),
-        name="token_refresh",
-    ),
-
+    path("api/auth/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("api/auth/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("api/auth/", include("apps.users.urls")),
 
     path("api/", include("apps.bookstore.urls")),
@@ -58,7 +53,4 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(
-        settings.MEDIA_URL,
-        document_root=settings.MEDIA_ROOT,
-    )
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

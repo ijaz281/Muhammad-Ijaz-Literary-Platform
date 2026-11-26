@@ -77,9 +77,8 @@ class CheckoutSerializer(serializers.Serializer):
     country = serializers.CharField(max_length=100, default="Pakistan")
     customer_notes = serializers.CharField(required=False, allow_blank=True)
     payment_method = serializers.ChoiceField(
-        choices=[Order.PaymentMethod.COD, Order.PaymentMethod.JAZZCASH],
-        required=False,
-        default=Order.PaymentMethod.COD,
+        choices=["cod", "jazzcash", "easypaisa", "raast"],
+        default="cod",
     )
 
     def validate(self, attrs):

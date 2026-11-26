@@ -56,10 +56,10 @@ class Follow(models.Model):
 
     class Meta:
         ordering = ["-created_at"]
-        constraints = [
-            models.UniqueConstraint(fields=["follower", "following"], name="unique_user_follow"),
-            models.CheckConstraint(condition=~models.Q(follower=models.F("following")), name="prevent_self_follow"),
-        ]
+        models.CheckConstraint(
+            check=~models.Q(follower=models.F("following")),
+            name="prevent_self_follow",
+        ),
         indexes = [models.Index(fields=["following", "created_at"]), models.Index(fields=["follower", "created_at"])]
 
     def __str__(self):

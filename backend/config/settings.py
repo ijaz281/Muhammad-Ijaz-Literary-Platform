@@ -59,7 +59,6 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     "rest_framework",
     "corsheaders",
-    "rest_framework_simplejwt.token_blacklist",
 ]
 
 LOCAL_APPS = [
@@ -182,11 +181,21 @@ USE_I18N = True
 USE_TZ = True
 
 
+# ============================================================
+# STATIC FILES
+# ============================================================
 
-STATIC_URL = "/static/"
+STATIC_URL = "static/"
+
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-MEDIA_URL = "/media/"
+
+# ============================================================
+# MEDIA FILES
+# ============================================================
+
+MEDIA_URL = "media/"
+
 MEDIA_ROOT = BASE_DIR / "media"
 
 
@@ -227,9 +236,9 @@ REST_FRAMEWORK = {
 # ============================================================
 
 CORS_ALLOWED_ORIGINS = [
-    origin.strip()
-    for origin in os.getenv("CORS_ALLOWED_ORIGINS", "").split(",")
-    if origin.strip()
+    "https://muhammad-ijaz-literary-platform.vercel.app",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
 ]
 
 # Allow authorization headers for JWT authentication.
@@ -242,22 +251,6 @@ CORS_ALLOW_HEADERS = [
     "x-csrftoken",
     "x-requested-with",
 ]
-
-# ============================================================
-# CSRF AND PRODUCTION SECURITY
-# ============================================================
-
-CSRF_TRUSTED_ORIGINS = [
-    origin.strip()
-    for origin in os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",")
-    if origin.strip()
-]
-
-if not DEBUG:
-    SECURE_CONTENT_TYPE_NOSNIFF = True
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
-    SECURE_REFERRER_POLICY = "same-origin"
 
 
 
@@ -292,55 +285,24 @@ if not DEBUG:
 # Server-controlled flat shipping fee (PKR); clients cannot override checkout pricing.
 LITERARY_SHIPPING_FEE = os.getenv("LITERARY_SHIPPING_FEE", "0.00")
 
-# ============================================================
-# EMAIL CONFIGURATION - GMAIL SMTP
-# ============================================================
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-
-EMAIL_HOST = os.getenv("EMAIL_HOST", "smtp.gmail.com")
-EMAIL_PORT = int(os.getenv("EMAIL_PORT", "587"))
-
-EMAIL_USE_TLS = (
-    os.getenv("EMAIL_USE_TLS", "True").strip().lower() == "true"
-)
-
-EMAIL_USE_SSL = (
-    os.getenv("EMAIL_USE_SSL", "False").strip().lower() == "true"
-)
-
-EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "")
-EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")
-
-DEFAULT_FROM_EMAIL = os.getenv(
-    "DEFAULT_FROM_EMAIL",
-    EMAIL_HOST_USER,
-)
-
-EMAIL_TIMEOUT = 20
-
-# Contact form notification recipient
-CONTACT_NOTIFICATION_EMAIL = os.getenv(
-    "CONTACT_NOTIFICATION_EMAIL",
-    EMAIL_HOST_USER,
-)
-
-
-# ============================================================
-# JAZZCASH MWALLET (disabled by default; sandbox only)
-# ============================================================
-
-JAZZCASH_ENABLED = os.getenv("JAZZCASH_ENABLED", "False").strip().lower() == "true"
-JAZZCASH_ENVIRONMENT = os.getenv("JAZZCASH_ENVIRONMENT", "sandbox").strip().lower()
-JAZZCASH_MERCHANT_ID = os.getenv("JAZZCASH_MERCHANT_ID", "")
-JAZZCASH_PASSWORD = os.getenv("JAZZCASH_PASSWORD", "")
-JAZZCASH_INTEGRITY_SALT = os.getenv("JAZZCASH_INTEGRITY_SALT", "")
-JAZZCASH_PAYMENT_URL = os.getenv("JAZZCASH_PAYMENT_URL", "")
-JAZZCASH_RETURN_URL = os.getenv(
-    "JAZZCASH_RETURN_URL",
-    "https://ejazi.pythonanywhere.com/api/payments/jazzcash/return/",
-)
-FRONTEND_PAYMENT_RESULT_URL = os.getenv(
-    "FRONTEND_PAYMENT_RESULT_URL",
-    "https://frontend-sigma-navy-97.vercel.app/cart",
-)
+# Manual payment destinations: fill these in backend/.env on the server.
+MANUAL_PAYMENT_DETAILS = {
+    "jazzcash": {
+        "account_title": os.getenv("JAZZCASH_ACCOUNT_TITLE", "MUHAMMAD Shop"),
+        "account_number": os.getenv("JAZZCASH_TILL_ID", "985063409"),
+        "instructions": os.getenv("JAZZCASH_INSTRUCTIONS", "Dial *786*10# in JazzCash and enter the Till ID, then pay the exact order amount."),
+    },
+    "easypaisa": {
+        "account_title": os.getenv("EASYPAISA_ACCOUNT_TITLE", ""),
+        "account_number": os.getenv("EASYPAISA_ACCOUNT_NUMBER", ""),
+        "instructions": os.getenv("EASYPAISA_INSTRUCTIONS", "Send the exact order amount using Easypaisa, then upload your transaction receipt."),
+    },
+    "raast": {
+        "account_title": os.getenv("RAAST_ACCOUNT_TITLE", "MUHAMMAD Shop"),
+        "account_number": os.getenv("RAAST_ID", ""),
+        "qr_image_url": os.getenv("RAAST_QR_IMAGE_URL", ""),
+        "instructions": os.getenv("RAAST_INSTRUCTIONS", "Scan the supplied merchant QR code and pay the exact order amount, then upload your transaction receipt."),
+    },
+}
+PAYMENT_PROOF_MAX_BYTES = 5 * 1024 * 1024

@@ -3,6 +3,7 @@ from decimal import Decimal
 
 from django.conf import settings
 from django.core.validators import MinValueValidator
+from django.core.files.storage import FileSystemStorage
 from django.db import models
 
 
@@ -11,7 +12,9 @@ class Payment(models.Model):
     class Status(models.TextChoices):
         PENDING = "pending", "Pending"
         PROCESSING = "processing", "Processing"
-        COMPLETED = "completed", "Completed"
+        UNDER_REVIEW = "under_review", "Under Review"
+        COMPLETED = "completed", "Approved"
+        REJECTED = "rejected", "Rejected"
         FAILED = "failed", "Failed"
         CANCELLED = "cancelled", "Cancelled"
         REFUNDED = "refunded", "Refunded"
@@ -40,8 +43,28 @@ class Payment(models.Model):
 
     provider = models.CharField(
         max_length=20,
+        choices=[
+            ("jazzcash", "JazzCash"),
+            ("easypaisa", "Easypaisa"),
+            ("raast", "Raast QR"),
+        ],
         default="jazzcash",
-        editable=False,
+    )
+
+    payment_proof = models.ImageField(
+        upload_to="%Y/%m/",
+        storage=FileSystemStorage(location=settings.BASE_DIR / "private_payment_proofs"),
+        blank=True,
+        null=True,
+    )
+    submitted_at = models.DateTimeField(blank=True, null=True)
+    admin_reviewed_at = models.DateTimeField(blank=True, null=True)
+    admin_reviewed_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="reviewed_literary_payments",
     )
 
     status = models.CharField(
@@ -114,6 +137,7 @@ class Refund(models.Model):
         COMPLETED = "completed", "Completed"
         REJECTED = "rejected", "Rejected"
         FAILED = "failed", "Failed"
+
 
     payment = models.ForeignKey(
         Payment,

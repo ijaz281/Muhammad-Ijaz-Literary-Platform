@@ -46,8 +46,11 @@ class Migration(migrations.Migration):
             ],
             options={"ordering": ["-created_at"]},
         ),
-        migrations.AddConstraint(model_name="follow", constraint=models.UniqueConstraint(fields=("follower", "following"), name="unique_user_follow")),
-        migrations.AddConstraint(model_name="follow", constraint=models.CheckConstraint(condition=~models.Q(follower=models.F("following")), name="prevent_self_follow")),
-        migrations.AddIndex(model_name="follow", index=models.Index(fields=["following", "created_at"], name="users_follo_followi_dcf251_idx")),
-        migrations.AddIndex(model_name="follow", index=models.Index(fields=["follower", "created_at"], name="users_follo_followe_229ec1_idx")),
+       migrations.AddConstraint(
+                model_name="follow",
+                constraint=models.CheckConstraint(
+                check=~models.Q(follower=models.F("following")),
+                name="prevent_self_follow"
+    )
+),
     ]
