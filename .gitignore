@@ -2,48 +2,28 @@
 .env
 .env.*
 !.env.example
-**/.env
-**/.env.*
-!**/.env.example
 
 # Python
 __pycache__/
 *.py[cod]
-venv/
 .venv/
-env/
+venv/
 
-# Databases
+# Local databases
 *.sqlite3
-*.sqlite3-*
-*.db
-*.db-backup*
+db.sqlite3
 
-# Uploaded media and generated static files
-backend/media/
-backend/staticfiles/
-staticfiles/
-
-# Node dependencies and builds
+# Node
 node_modules/
-frontend/node_modules/
-frontend/dist/
+
+# User uploads
+media/
+
+# Build output
 dist/
+build/
 
-# Logs and temporary files
-*.log
-.cache/
-.DS_Store
-Thumbs.db
-
-# Archives
-*.zip
-*.rar
-*.7z
-
-# IDE
-.idea/
-.vscode/
-
-# Backup folders
-cod_backup_*/
+# Backup files
+*.backup*
+*.before*
+*.bak
