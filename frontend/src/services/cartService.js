@@ -40,3 +40,15 @@ export async function getMyOrders() {
   const response = await api.get("/api/store/orders/");
   return response.data;
 }
+
+export async function createJazzCashPayment(orderNumber) {
+  const response = await api.post("/api/payments/create/", {
+    order_number: orderNumber,
+  });
+  return response.data;
+}
+
+export async function getOrder(orderNumber) {
+  const response = await api.get(`/api/store/orders/${orderNumber}/`);
+  return response.data;
+}

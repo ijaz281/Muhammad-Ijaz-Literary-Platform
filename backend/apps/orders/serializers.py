@@ -60,7 +60,7 @@ class OrderSerializer(serializers.ModelSerializer):
                   "discount_amount", "shipping_fee", "tax_amount", "total_amount",
                   "shipping_name", "shipping_phone", "shipping_address",
                   "shipping_city", "shipping_state", "shipping_postal_code",
-                  "shipping_country", "customer_notes", "items", "placed_at",
+                  "shipping_country", "customer_notes", "payment_method", "items", "placed_at",
                   "shipped_at", "delivered_at", "created_at", "updated_at"]
         read_only_fields = fields
 
@@ -76,6 +76,11 @@ class CheckoutSerializer(serializers.Serializer):
     postal_code = serializers.CharField(max_length=30, required=False, allow_blank=True)
     country = serializers.CharField(max_length=100, default="Pakistan")
     customer_notes = serializers.CharField(required=False, allow_blank=True)
+    payment_method = serializers.ChoiceField(
+        choices=[Order.PaymentMethod.COD, Order.PaymentMethod.JAZZCASH],
+        required=False,
+        default=Order.PaymentMethod.COD,
+    )
 
     def validate(self, attrs):
         if not attrs.get("shipping_address_id"):
