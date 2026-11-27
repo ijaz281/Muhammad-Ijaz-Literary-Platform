@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   ShoppingBag,
   Trash2,
@@ -8,6 +8,8 @@ import {
   LoaderCircle,
   LockKeyhole,
   CheckCircle2,
+  CreditCard,
+  Upload,
 } from "lucide-react";
 
 import Container from "../components/ui/Container";
@@ -17,8 +19,8 @@ import {
   updateCartItem,
   removeCartItem,
   checkout,
-  createJazzCashPayment,
-  getOrder,
+  createPayment,
+  submitJazzCashProof,
 } from "../services/cartService";
 
 const initialAddress = {
@@ -38,12 +40,18 @@ export default function CartPage() {
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(null);
   const [error, setError] = useState("");
+
   const [address, setAddress] = useState(initialAddress);
   const [showCheckout, setShowCheckout] = useState(false);
   const [order, setOrder] = useState(null);
-  const [paymentMethod, setPaymentMethod] = useState("cod");
-  const [searchParams] = useSearchParams();
-  const paymentReturnOrder = searchParams.get("order");
+
+  const [paymentMethod, setPaymentMethod] = useState("jazzcash");
+  const [payment, setPayment] = useState(null);
+  const [paymentInitLoading, setPaymentInitLoading] = useState(false);
+
+  const [transactionId, setTransactionId] = useState("");
+  const [receipt, setReceipt] = useState(null);
+  const [proofLoading, setProofLoading] = useState(false);
 
   const authenticated = isAuthenticated();
 
@@ -55,7 +63,7 @@ export default function CartPage() {
       const data = await getCart();
       setCart(data);
     } catch {
-      setError("خریداری کی ٹوکری لوڈ نہیں ہو سکی۔ دوبارہ کوشش کریں۔");
+      setError("Unable to load your cart. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -64,15 +72,10 @@ export default function CartPage() {
   useEffect(() => {
     if (authenticated) {
       loadCart();
-      if (paymentReturnOrder) {
-        getOrder(paymentReturnOrder)
-          .then(setOrder)
-          .catch(() => setError("ادائیگی کا نتیجہ حاصل نہیں ہو سکا۔ اپنے آرڈرز میں اسٹیٹس چیک کریں۔"));
-      }
     } else {
       setLoading(false);
     }
-  }, [authenticated, paymentReturnOrder]);
+  }, [authenticated]);
 
   async function handleQuantity(item, quantity) {
     if (quantity < 1) return;
@@ -90,7 +93,7 @@ export default function CartPage() {
           ? Object.values(data).flat()[0]
           : null;
 
-      setError(String(firstError || "اشیا کی تعداد اپ ڈیٹ نہیں ہو سکی۔"));
+      setError(String(firstError || "Unable to update item quantity."));
     } finally {
       setUpdating(null);
     }
@@ -104,17 +107,28 @@ export default function CartPage() {
       await removeCartItem(itemId);
       await loadCart();
     } catch {
-      setError("یہ شے حذف نہیں ہو سکی۔");
+      setError("Unable to remove this item.");
     } finally {
       setUpdating(null);
     }
   }
 
   function handleAddressChange(event) {
-    setAddress({
-      ...address,
+    setAddress((current) => ({
+      ...current,
       [event.target.name]: event.target.value,
-    });
+    }));
+  }
+
+  function extractError(err, fallback) {
+    const data = err.response?.data;
+
+    if (data && typeof data === "object") {
+      const firstError = Object.values(data).flat()[0];
+      return String(firstError || fallback);
+    }
+
+    return fallback;
   }
 
   async function handleCheckout(event) {
@@ -129,48 +143,107 @@ export default function CartPage() {
         payment_method: paymentMethod,
       });
 
-      if (paymentMethod === "jazzcash") {
-        setOrder(result);
-        setCart(null);
-        setShowCheckout(false);
-        const payment = await createJazzCashPayment(result.order_number);
-        window.location.assign(payment.redirect_url);
-        return;
-      }
-
+      // The order has been created successfully.
       setOrder(result);
       setCart(null);
       setShowCheckout(false);
       setAddress(initialAddress);
-    } catch (err) {
-      const data = err.response?.data;
 
-      if (data && typeof data === "object") {
-        const firstError = Object.values(data).flat()[0];
-        setError(String(firstError || "چیک آؤٹ مکمل نہیں ہو سکا۔"));
-      } else {
-        setError("چیک آؤٹ مکمل نہیں ہو سکا۔ براہِ کرم دوبارہ کوشش کریں۔");
+      // COD does not require a separate payment initialization.
+      if (paymentMethod === "cod") {
+        setPayment(null);
+        return;
       }
+
+      // Retrieve the pending JazzCash payment created during checkout.
+      try {
+        setPaymentInitLoading(true);
+
+        const paymentResult = await createPayment(result.order_number);
+
+        setPayment(paymentResult.payment || paymentResult);
+      } catch (paymentError) {
+        setError(
+          extractError(
+            paymentError,
+            "Your order was created, but payment information could not be loaded. Please try again."
+          )
+        );
+      } finally {
+        setPaymentInitLoading(false);
+      }
+    } catch (err) {
+      setError(
+        extractError(
+          err,
+          "Checkout could not be completed. Please try again."
+        )
+      );
     } finally {
       setLoading(false);
     }
   }
 
-  async function continueJazzCashPayment() {
+  async function handleRetryPayment() {
     if (!order?.order_number) return;
+
     try {
-      setLoading(true);
+      setPaymentInitLoading(true);
       setError("");
-      const payment = await createJazzCashPayment(order.order_number);
-      window.location.assign(payment.redirect_url);
+
+      const result = await createPayment(order.order_number);
+      setPayment(result.payment || result);
     } catch (err) {
-      const data = err.response?.data;
-      const firstError = data && typeof data === "object"
-        ? Object.values(data).flat()[0]
-        : null;
-      setError(String(firstError || "JazzCash ادائیگی شروع نہیں ہو سکی۔"));
+      setError(
+        extractError(err, "Unable to load payment information.")
+      );
     } finally {
-      setLoading(false);
+      setPaymentInitLoading(false);
+    }
+  }
+
+  async function handleProofSubmit(event) {
+    event.preventDefault();
+
+    if (!payment?.id) {
+      setError("Payment information is unavailable. Please reload it.");
+      return;
+    }
+
+    if (!transactionId.trim()) {
+      setError("Please enter your JazzCash transaction ID.");
+      return;
+    }
+
+    if (!receipt) {
+      setError("Please select your JazzCash payment receipt.");
+      return;
+    }
+
+    try {
+      setProofLoading(true);
+      setError("");
+
+      const result = await submitJazzCashProof(
+        payment.id,
+        transactionId.trim(),
+        receipt
+      );
+
+      setPayment(result.payment || result);
+      setTransactionId("");
+      setReceipt(null);
+
+      setError("");
+    } catch (err) {
+      setError(
+        extractError(
+          err,
+          "Unable to submit your payment receipt. Please try again."
+        )
+      );
+    } finally {
+      setProofLoading(false);
     }
   }
 
@@ -184,16 +257,275 @@ export default function CartPage() {
     })}`;
   }
 
+  function renderOrderSuccess() {
+    const verificationStatus = payment?.verification_status;
+
+    return (
+      <div className="mx-auto mt-14 max-w-2xl border border-gray-200 bg-white p-7 sm:p-10">
+        <div className="text-center">
+          <CheckCircle2
+            className="mx-auto text-green-600"
+            size={52}
+          />
+
+          <h2 className="mt-5 font-serif text-3xl font-bold text-literary-navy">
+            Order Placed Successfully
+          </h2>
+
+          <p className="mt-4 text-gray-600">
+            Thank you for ordering from our bookstore.
+          </p>
+
+          <div className="mt-6 space-y-3 bg-gray-50 p-5 text-left text-sm">
+            <p className="break-all">
+              <strong>Order Number:</strong> {order.order_number}
+            </p>
+
+            <p>
+              <strong>Total Amount:</strong>{" "}
+              {formatPrice(order.total_amount)}
+            </p>
+
+            <p>
+              <strong>Payment Method:</strong>{" "}
+              {order.payment_method === "cod"
+                ? "Cash on Delivery"
+                : "JazzCash"}
+            </p>
+
+            <p>
+              <strong>Order Status:</strong>{" "}
+              {order.status || "Pending"}
+            </p>
+          </div>
+        </div>
+
+        {order.payment_method === "cod" ? (
+          <div className="mt-7 border border-green-200 bg-green-50 p-5">
+            <h3 className="font-semibold text-green-800">
+              Cash on Delivery Selected
+            </h3>
+
+            <p className="mt-2 text-sm leading-6 text-green-700">
+              Your order has been submitted. You can pay the delivery
+              person when your books arrive.
+            </p>
+          </div>
+        ) : (
+          <div className="mt-7 border border-amber-200 bg-amber-50 p-5">
+            <div className="flex items-center gap-3">
+              <CreditCard className="text-amber-800" size={24} />
+
+              <h3 className="font-serif text-xl font-bold text-literary-navy">
+                JazzCash Payment
+              </h3>
+            </div>
+
+            {paymentInitLoading ? (
+              <div className="mt-5 flex items-center gap-3 text-sm text-gray-600">
+                <LoaderCircle
+                  className="animate-spin"
+                  size={20}
+                />
+                Loading payment information...
+              </div>
+            ) : !payment ? (
+              <div className="mt-5">
+                <p className="text-sm leading-6 text-gray-700">
+                  Your order has been created, but payment information
+                  is not currently available.
+                </p>
+
+                <button
+                  type="button"
+                  onClick={handleRetryPayment}
+                  disabled={paymentInitLoading}
+                  className="mt-4 bg-literary-navy px-5 py-3 text-sm font-semibold text-white disabled:opacity-50"
+                >
+                  Retry Loading Payment
+                </button>
+              </div>
+            ) : (
+              <>
+                <div className="mt-5 space-y-3 text-sm text-gray-700">
+                  <p>
+                    <strong>Amount to Pay:</strong>{" "}
+                    {formatPrice(payment.amount)}
+                  </p>
+
+                  <p className="break-all">
+                    <strong>Payment Reference:</strong>{" "}
+                    {payment.payment_reference}
+                  </p>
+                </div>
+
+                {verificationStatus === "approved" ? (
+                  <div className="mt-6 border border-green-200 bg-green-50 p-5">
+                    <h4 className="font-bold text-green-800">
+                      Payment Verified
+                    </h4>
+
+                    <p className="mt-2 text-sm text-green-700">
+                      Your JazzCash payment has been approved.
+                    </p>
+                  </div>
+                ) : verificationStatus === "submitted" ? (
+                  <div className="mt-6 border border-blue-200 bg-blue-50 p-5">
+                    <h4 className="font-bold text-blue-800">
+                      Receipt Submitted Successfully
+                    </h4>
+
+                    <p className="mt-2 text-sm leading-6 text-blue-700">
+                      Your payment receipt has been submitted and is
+                      waiting for administrator verification.
+                    </p>
+                  </div>
+                ) : (
+                  <>
+                    {verificationStatus === "rejected" && (
+                      <div className="mt-6 border border-red-200 bg-red-50 p-5">
+                        <h4 className="font-bold text-red-800">
+                          Previous Receipt Rejected
+                        </h4>
+
+                        <p className="mt-2 text-sm text-red-700">
+                          {payment.review_note ||
+                            "Your previous payment proof was rejected. Please check your transaction details and submit valid proof again."}
+                        </p>
+                      </div>
+                    )}
+
+                    <div className="mt-6">
+                      <h4 className="font-semibold text-literary-navy">
+                        How to Complete Your Payment
+                      </h4>
+
+                      <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm leading-6 text-gray-700">
+                        <li>
+                          Open your JazzCash application or use the
+                          official JazzCash payment method provided by
+                          the bookstore.
+                        </li>
+                        <li>
+                          Pay the exact amount shown above using the
+                          bookstore's verified receiving account
+                          details.
+                        </li>
+                        <li>
+                          Save your successful transaction receipt.
+                        </li>
+                        <li>
+                          Enter your transaction ID and upload the
+                          receipt below.
+                        </li>
+                      </ol>
+                    </div>
+
+                    <form
+                      onSubmit={handleProofSubmit}
+                      className="mt-7 space-y-5 border-t border-amber-200 pt-6"
+                    >
+                      <div>
+                        <label className="mb-2 block text-sm font-semibold text-gray-700">
+                          JazzCash Transaction ID
+                        </label>
+
+                        <input
+                          type="text"
+                          value={transactionId}
+                          onChange={(event) =>
+                            setTransactionId(event.target.value)
+                          }
+                          required
+                          maxLength={255}
+                          placeholder="Enter transaction ID"
+                          className="w-full border border-gray-300 bg-white px-4 py-3 outline-none focus:border-literary-gold"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="mb-2 block text-sm font-semibold text-gray-700">
+                          Upload Payment Receipt
+                        </label>
+
+                        <input
+                          type="file"
+                          accept="image/*,.pdf"
+                          required
+                          onChange={(event) =>
+                            setReceipt(event.target.files?.[0] || null)
+                          }
+                          className="w-full text-sm text-gray-600"
+                        />
+
+                        {receipt && (
+                          <p className="mt-2 text-xs text-gray-500">
+                            Selected: {receipt.name}
+                          </p>
+                        )}
+                      </div>
+
+                      <button
+                        type="submit"
+                        disabled={proofLoading}
+                        className="flex w-full items-center justify-center gap-2 bg-literary-navy px-6 py-4 font-semibold text-white transition hover:bg-literary-gold hover:text-literary-navy disabled:opacity-60"
+                      >
+                        {proofLoading ? (
+                          <LoaderCircle
+                            className="animate-spin"
+                            size={19}
+                          />
+                        ) : (
+                          <Upload size={19} />
+                        )}
+
+                        {proofLoading
+                          ? "Submitting Receipt..."
+                          : "Submit Payment Receipt"}
+                      </button>
+                    </form>
+                  </>
+                )}
+              </>
+            )}
+          </div>
+        )}
+
+        {error && (
+          <p className="mt-5 bg-red-50 p-4 text-sm text-red-700">
+            {error}
+          </p>
+        )}
+
+        <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+          <Link
+            to="/account"
+            className="bg-literary-navy px-8 py-4 text-center font-semibold text-white hover:bg-literary-gold hover:text-literary-navy"
+          >
+            My Account
+          </Link>
+
+          <Link
+            to="/books"
+            className="border border-literary-navy px-8 py-4 text-center font-semibold text-literary-navy hover:bg-gray-50"
+          >
+            Continue Shopping
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <main className="min-h-screen bg-[#f8f7f3] py-16 sm:py-24">
       <Container>
         <div className="text-center">
           <p className="text-sm font-bold uppercase tracking-[0.3em] text-literary-gold">
-            آپ کا انتخاب
+            Your Selection
           </p>
 
           <h1 className="mt-4 font-serif text-4xl font-bold text-literary-navy sm:text-6xl">
-            خریداری کی ٹوکری
+            Shopping Cart
           </h1>
         </div>
 
@@ -205,18 +537,18 @@ export default function CartPage() {
             />
 
             <h2 className="mt-5 font-serif text-2xl font-bold text-literary-navy">
-              لاگ اِن ضروری ہے
+              Login Required
             </h2>
 
             <p className="mt-3 leading-7 text-gray-600">
-              اپنی ذاتی خریداری کی ٹوکری تک رسائی کے لیے لاگ اِن کریں۔
+              Please log in to access your personal shopping cart.
             </p>
 
             <Link
               to="/account"
               className="mt-7 inline-block bg-literary-navy px-8 py-4 font-semibold text-white hover:bg-literary-gold hover:text-literary-navy"
             >
-              جاری رکھنے کے لیے لاگ اِن کریں
+              Login to Continue
             </Link>
           </div>
         ) : loading && !order ? (
@@ -227,61 +559,7 @@ export default function CartPage() {
             />
           </div>
         ) : order ? (
-          <div className="mx-auto mt-14 max-w-xl border border-gray-200 bg-white p-10 text-center">
-            {error && <p className="mb-5 bg-red-50 p-3 text-sm text-red-700">{error}</p>}
-            <CheckCircle2
-              className="mx-auto text-green-600"
-              size={52}
-            />
-
-            <h2 className="mt-5 font-serif text-3xl font-bold text-literary-navy">
-              {order.payment_status === "paid"
-                ? "ادائیگی کامیاب ہو گئی"
-                : order.payment_status === "failed"
-                  ? "ادائیگی مکمل نہیں ہو سکی"
-                  : order.payment_method === "jazzcash"
-                    ? "ادائیگی کی تصدیق جاری ہے"
-                    : "آرڈر مکمل ہو گیا"}
-            </h2>
-
-            <p className="mt-4 text-gray-600">
-              {order.payment_status === "paid"
-                ? "JazzCash نے آپ کی ادائیگی کی تصدیق کر دی ہے۔"
-                : order.payment_status === "failed"
-                  ? "ادائیگی ناکام ہوئی۔ آپ آرڈر کی تفصیلات میں اسٹیٹس دیکھ سکتے ہیں۔"
-                  : order.payment_method === "jazzcash"
-                    ? "آپ کی ادائیگی ابھی زیرِ تصدیق ہے۔ براہِ کرم دوبارہ ادائیگی شروع نہ کریں۔"
-                    : "آپ کا آرڈر کامیابی سے جمع ہو گیا ہے۔"}
-            </p>
-
-            <p className="mt-5 break-all bg-gray-50 p-4 text-sm">
-              آرڈر نمبر: {order.order_number}
-            </p>
-
-            <p className="mt-4 font-bold text-literary-navy">
-              کل رقم: {formatPrice(order.total_amount)}
-            </p>
-            <p className="mt-2 text-sm text-gray-600">
-              ادائیگی کی حالت: {order.payment_status || "pending"}
-            </p>
-
-            {order.payment_method === "jazzcash" && order.payment_status !== "paid" && (
-              <button
-                type="button"
-                onClick={continueJazzCashPayment}
-                disabled={loading}
-                className="mt-7 mr-3 inline-block bg-literary-gold px-8 py-4 font-semibold text-literary-navy disabled:opacity-60"
-              >
-                {loading ? "براہِ کرم انتظار کریں" : "JazzCash پر دوبارہ جائیں"}
-              </button>
-            )}
-            <Link
-              to="/account"
-              className="mt-7 inline-block bg-literary-navy px-8 py-4 font-semibold text-white hover:bg-literary-gold hover:text-literary-navy"
-            >
-              میرا اکاؤنٹ
-            </Link>
-          </div>
+          renderOrderSuccess()
         ) : (
           <div className="mx-auto mt-14 max-w-6xl">
             {error && (
@@ -298,18 +576,18 @@ export default function CartPage() {
                 />
 
                 <h2 className="mt-5 font-serif text-2xl font-bold text-literary-navy">
-                  آپ کی ٹوکری خالی ہے
+                  Your Cart is Empty
                 </h2>
 
                 <p className="mt-3 text-gray-600">
-                  کتب خانے کی سیر کریں اور اپنی اگلی پسندیدہ کتاب دریافت کریں۔
+                  Explore the bookstore and discover your next read.
                 </p>
 
                 <Link
                   to="/books"
                   className="mt-7 inline-block bg-literary-navy px-8 py-4 font-semibold text-white hover:bg-literary-gold hover:text-literary-navy"
                 >
-                  کتب دیکھیے
+                  Explore Books
                 </Link>
               </div>
             ) : (
@@ -352,7 +630,9 @@ export default function CartPage() {
                         <div className="flex items-center border border-gray-300">
                           <button
                             type="button"
-                            disabled={updating === item.id || item.quantity <= 1}
+                            disabled={
+                              updating === item.id || item.quantity <= 1
+                            }
                             onClick={() =>
                               handleQuantity(item, item.quantity - 1)
                             }
@@ -384,7 +664,7 @@ export default function CartPage() {
                           className="flex items-center gap-2 text-sm font-semibold text-red-600 hover:text-red-800 disabled:opacity-40"
                         >
                           <Trash2 size={16} />
-                          حذف کریں
+                          Remove
                         </button>
                       </div>
                     </article>
@@ -393,12 +673,12 @@ export default function CartPage() {
 
                 <aside className="border border-gray-200 bg-white p-7">
                   <h2 className="font-serif text-2xl font-bold text-literary-navy">
-                    آرڈر کا خلاصہ
+                    Order Summary
                   </h2>
 
                   <div className="mt-7 flex justify-between border-b border-gray-200 pb-5 text-sm">
                     <span className="text-gray-600">
-                      اشیا ({cart?.total_items || 0})
+                      Items ({cart?.total_items || 0})
                     </span>
 
                     <span className="font-semibold">
@@ -408,7 +688,7 @@ export default function CartPage() {
 
                   <div className="mt-5 flex justify-between">
                     <span className="font-bold text-literary-navy">
-                      ذیلی مجموعہ
+                      Subtotal
                     </span>
 
                     <span className="font-bold text-literary-navy">
@@ -417,14 +697,16 @@ export default function CartPage() {
                   </div>
 
                   <p className="mt-4 text-xs leading-6 text-gray-500">
-                    اگر ترسیلی اخراجات لاگو ہوئے تو آرڈر کی کارروائی کے دوران ان کا حساب کیا جائے گا۔
+                    Shipping charges, if applicable, will be calculated
+                    during order processing.
                   </p>
 
                   <button
+                    type="button"
                     onClick={() => setShowCheckout(!showCheckout)}
                     className="mt-8 w-full bg-literary-navy px-5 py-4 font-semibold text-white transition hover:bg-literary-gold hover:text-literary-navy"
                   >
-                    {showCheckout ? "چیک آؤٹ بند کریں" : "چیک آؤٹ کی طرف بڑھیں"}
+                    {showCheckout ? "Hide Checkout" : "Proceed to Checkout"}
                   </button>
                 </aside>
               </div>
@@ -433,11 +715,11 @@ export default function CartPage() {
             {showCheckout && items.length > 0 && (
               <section className="mt-10 border border-gray-200 bg-white p-7 sm:p-10">
                 <h2 className="font-serif text-2xl font-bold text-literary-navy">
-                  ترسیل کی معلومات
+                  Shipping Information
                 </h2>
 
                 <p className="mt-2 text-sm text-gray-500">
-                  وہ پتہ درج کریں جہاں آپ اپنی کتب وصول کرنا چاہتے ہیں۔
+                  Enter the address where you want your books delivered.
                 </p>
 
                 <form
@@ -445,14 +727,14 @@ export default function CartPage() {
                   className="mt-8 grid gap-5 sm:grid-cols-2"
                 >
                   {[
-                    ["full_name", "مکمل نام", true],
-                    ["phone", "فون نمبر", true],
-                    ["address_line_1", "پتہ، پہلی سطر", true],
-                    ["address_line_2", "پتہ، دوسری سطر", false],
-                    ["city", "شہر", true],
-                    ["state", "صوبہ", false],
-                    ["postal_code", "پوسٹل کوڈ", false],
-                    ["country", "ملک", true],
+                    ["full_name", "Full Name", true],
+                    ["phone", "Phone Number", true],
+                    ["address_line_1", "Address Line 1", true],
+                    ["address_line_2", "Address Line 2", false],
+                    ["city", "City", true],
+                    ["state", "State / Province", false],
+                    ["postal_code", "Postal Code", false],
+                    ["country", "Country", true],
                   ].map(([name, label, required]) => (
                     <div
                       key={name}
@@ -477,42 +759,8 @@ export default function CartPage() {
                   ))}
 
                   <div className="sm:col-span-2">
-                    <p className="mb-3 text-sm font-semibold text-gray-700">
-                      ادائیگی کا طریقہ منتخب کریں
-                    </p>
-                    <div className="grid gap-3 sm:grid-cols-2">
-                      <label className={`flex cursor-pointer items-center gap-3 border p-4 ${paymentMethod === "jazzcash" ? "border-literary-gold bg-amber-50" : "border-gray-300"}`}>
-                        <input
-                          type="radio"
-                          name="payment_method"
-                          value="jazzcash"
-                          checked={paymentMethod === "jazzcash"}
-                          onChange={() => setPaymentMethod("jazzcash")}
-                        />
-                        <span>
-                          <span className="block font-semibold text-literary-navy">JazzCash Mobile Account</span>
-                          <span className="mt-1 block text-xs text-gray-500">ادائیگی JazzCash کے محفوظ پیج پر مکمل کریں</span>
-                        </span>
-                      </label>
-                      <label className={`flex cursor-pointer items-center gap-3 border p-4 ${paymentMethod === "cod" ? "border-literary-gold bg-amber-50" : "border-gray-300"}`}>
-                        <input
-                          type="radio"
-                          name="payment_method"
-                          value="cod"
-                          checked={paymentMethod === "cod"}
-                          onChange={() => setPaymentMethod("cod")}
-                        />
-                        <span>
-                          <span className="block font-semibold text-literary-navy">Cash on Delivery</span>
-                          <span className="mt-1 block text-xs text-gray-500">کتابیں وصول کرتے وقت ادائیگی کریں</span>
-                        </span>
-                      </label>
-                    </div>
-                  </div>
-
-                  <div className="sm:col-span-2">
                     <label className="mb-2 block text-sm font-semibold text-gray-700">
-                      آرڈر سے متعلق نوٹ (اختیاری)
+                      Order Notes (Optional)
                     </label>
 
                     <textarea
@@ -522,6 +770,70 @@ export default function CartPage() {
                       rows={3}
                       className="w-full border border-gray-300 px-4 py-3 outline-none focus:border-literary-gold"
                     />
+                  </div>
+
+                  <div className="sm:col-span-2">
+                    <h3 className="mb-4 font-serif text-xl font-bold text-literary-navy">
+                      Select Payment Method
+                    </h3>
+
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      <label
+                        className={`flex cursor-pointer items-start gap-3 border p-5 ${
+                          paymentMethod === "jazzcash"
+                            ? "border-literary-gold bg-amber-50"
+                            : "border-gray-200"
+                        }`}
+                      >
+                        <input
+                          type="radio"
+                          name="payment_method"
+                          value="jazzcash"
+                          checked={paymentMethod === "jazzcash"}
+                          onChange={() => setPaymentMethod("jazzcash")}
+                          className="mt-1"
+                        />
+
+                        <span>
+                          <span className="flex items-center gap-2 font-semibold text-literary-navy">
+                            <CreditCard size={19} />
+                            JazzCash
+                          </span>
+
+                          <span className="mt-2 block text-sm leading-5 text-gray-500">
+                            Pay through JazzCash and submit your
+                            transaction receipt for verification.
+                          </span>
+                        </span>
+                      </label>
+
+                      <label
+                        className={`flex cursor-pointer items-start gap-3 border p-5 ${
+                          paymentMethod === "cod"
+                            ? "border-literary-gold bg-amber-50"
+                            : "border-gray-200"
+                        }`}
+                      >
+                        <input
+                          type="radio"
+                          name="payment_method"
+                          value="cod"
+                          checked={paymentMethod === "cod"}
+                          onChange={() => setPaymentMethod("cod")}
+                          className="mt-1"
+                        />
+
+                        <span>
+                          <span className="font-semibold text-literary-navy">
+                            Cash on Delivery
+                          </span>
+
+                          <span className="mt-2 block text-sm leading-5 text-gray-500">
+                            Pay when your books are delivered.
+                          </span>
+                        </span>
+                      </label>
+                    </div>
                   </div>
 
                   <div className="sm:col-span-2">
@@ -537,7 +849,7 @@ export default function CartPage() {
                         />
                       )}
 
-                      {paymentMethod === "jazzcash" ? "JazzCash کے ذریعے ادائیگی کریں" : "آرڈر مکمل کریں"}
+                      {loading ? "Processing..." : "Place Order"}
                     </button>
                   </div>
                 </form>
